@@ -3,7 +3,7 @@ import phoenix.client
 import time
 client = phoenix.client.client
 
-@events.register(events.NewMessage(outgoing=True, pattern='\.تحميل'))
+@events.register(events.NewMessage(outgoing=True, pattern='\.التثبيت'))
 async def alive(event):
 		client = event.client
 		me = await client.get_me()
@@ -17,7 +17,7 @@ async def alive(event):
 			
 v.1.2.0
 
-📥 التحميل 
+📥 التثبيت 
 
 $ `pkg update && pkg upgrade`
 
