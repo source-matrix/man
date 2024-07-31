@@ -262,67 +262,67 @@ P = ("███████▄▄███████████▄\n"
 "░░░░░░░░░░░░▀▀\n\n")
 
 
-@events.register(events.NewMessage(pattern=r".monster"))
+@events.register(events.NewMessage(pattern=r".وحش"))
 async def animmonster(monster):
     await monster.edit(A)
 
-@events.register(events.NewMessage(pattern=r".pig"))
+@events.register(events.NewMessage(pattern=r".خنزير"))
 async def animpig(pig):
     await pig.edit(B)
 
-@events.register(events.NewMessage(pattern=r".killer"))
+@events.register(events.NewMessage(pattern=r".قاتل"))
 async def animkiller(killer):
     await killer.edit(C)
 
-@events.register(events.NewMessage(pattern=r".gun"))
+@events.register(events.NewMessage(pattern=r".سلاح"))
 async def animgun(gun):
     await gun.edit(D)
 
-@events.register(events.NewMessage(pattern=r".dog"))
+@events.register(events.NewMessage(pattern=r".كلب"))
 async def animdog(dog):
     await dog.edit(E)    
 
-@events.register(events.NewMessage(pattern=r".hello"))
+@events.register(events.NewMessage(pattern=r".هلو"))
 async def animhello(hello):
     await hello.edit(F)
 
-@events.register(events.NewMessage(pattern=r".hmf"))
+@events.register(events.NewMessage(pattern=r".همف"))
 async def animhmf(hmf):
     await hmf.edit(G)
 
-@events.register(events.NewMessage(pattern=r".couple"))
+@events.register(events.NewMessage(pattern=r".زوج"))
 async def couple(e):
     await e.edit(H)
 
-@events.register(events.NewMessage(pattern=r".sup$"))
+@events.register(events.NewMessage(pattern=r".رشفة"))
 async def superme(e):
     await e.edit(I)
 
-@events.register(events.NewMessage(pattern=r".welc"))
+@events.register(events.NewMessage(pattern=r".مرحبا"))
 async def welcome(e):
     await e.edit(K)
 
-@events.register(events.NewMessage(pattern=r".asnake"))
+@events.register(events.NewMessage(pattern=r".ثعبان"))
 async def snake(e):
     await e.edit(L) 
 
-@events.register(events.NewMessage(pattern=r".cat"))
+@events.register(events.NewMessage(pattern=r".قطة"))
 async def cat(e):
     await e.edit(M)
 
-@events.register(events.NewMessage(pattern=r".bye"))
+@events.register(events.NewMessage(pattern=r".وداعا"))
 async def bye(e):
     await e.edit(N)
 
-@events.register(events.NewMessage(pattern=r".shitos"))
+@events.register(events.NewMessage(pattern=r".شيتوز"))
 async def shitos(e):
     await e.edit(O)
 
-@events.register(events.NewMessage(pattern=r".dislike"))
+@events.register(events.NewMessage(pattern=r".دسلايك"))
 async def dislike(e):
     await e.edit(P)
 
-@events.register(events.NewMessage(pattern=f".hypno$"))
+@events.register(events.NewMessage(pattern=f".هينفو"))
 async def snku(ult):
     ult = await ult.edit("`>>>`")
     animation_interval = 0.3
