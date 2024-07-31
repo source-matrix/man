@@ -9,7 +9,6 @@ async def ahelp(event):
 	messagelocation = event.to_id
 	await event.client.send_message(messagelocation, ("""
 <b>قائمة الرسوم المتحركة</b>
-
 [01] فن الوحش - .monster
 [02] فن الخنزير - .pig
 [03] فن القاتل - .killer
@@ -43,7 +42,5 @@ async def ahelp(event):
 [31] قلوب متحركة - .vheart {نص}
 [32] أحبك  أنمي - .luvart {نص}
 [33] أحبك  - .iloveu
-
-
 <b>المطور:</b> @I0I0II 
 """))
