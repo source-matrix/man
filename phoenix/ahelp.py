@@ -2,13 +2,13 @@ from telethon import events
 
 import phoenix.client
 client = phoenix.client.client
-@events.register(events.NewMessage(outgoing=True, pattern=".رسوم"))
+@events.register(events.NewMessage(outgoing=True, pattern=".تسلية"))
 async def ahelp(event):
 	client.parse_mode = "html"
 	await event.delete()
 	messagelocation = event.to_id
 	await event.client.send_message(messagelocation, ("""
-<b>قائمة الرسوم المتحركة</b>
+<b>قائمة التسلية</b>
 [01] فن الوحش - .monster
 [02] فن الخنزير - .pig
 [03] فن القاتل - .killer
