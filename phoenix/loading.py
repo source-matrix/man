@@ -4,7 +4,7 @@ import asyncio
 import random
 import phoenix.client
 client = phoenix.client.client
-@events.register(events.NewMessage(pattern='.loading$', outgoing=True))
+@events.register(events.NewMessage(pattern='.تحميل', outgoing=True))
 async def loading(event: events.NewMessage.Event):
     try:
         percentage = 0
