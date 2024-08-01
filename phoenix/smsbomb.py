@@ -5,7 +5,7 @@ from os import remove
 
 client = phoenix.client.client
 
-@events.register(events.NewMessage(outgoing=True, pattern=r'\.tts'))
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.صوت'))
 async def runj(event):
     await event.delete()
     language = event.message.raw_text.split()
