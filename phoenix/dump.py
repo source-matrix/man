@@ -1,6 +1,6 @@
 from telethon import events, errors
 import asyncio
-@events.register(events.NewMessage(pattern="^.dump ?(.*)", outgoing=True))
+@events.register(events.NewMessage(pattern=".احمق", outgoing=True))
 
 async def dump(message):
     try:
