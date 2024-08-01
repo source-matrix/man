@@ -3,11 +3,11 @@ from time import sleep
 from urllib.request import urlopen
 import json
 
-@events.register(events.NewMessage(outgoing=True, pattern=r'\.iptrace'))
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.بحث ايبي'))
 async def iptrace(event):
     getip = event.message.raw_text.split()
     messagelocation = event.to_id
-    await event.edit("Tracing...")
+    await event.edit("يبحث...")
     sleep(2)
     await event.delete()
     targetip = getip[1]
@@ -15,5 +15,5 @@ async def iptrace(event):
     start = urlopen(url+targetip)
     ipdata = start.read()
     information = json.loads(ipdata)
-    await event.client.send_message(messagelocation, f"Target IP: {information['query']}\nCountry: {information['country']}\nCountry Code: {information['countryCode']}\nRegion: {information['region']}\nRegion Name: {information['regionName']}\nCity: {information['city']}\nZip: {information['zip']}\nLatitude: {information['lat']}\nLongitude: {information['lon']}\nTimezone: {information['timezone']}\nISP: {information['isp'].title()}\nOrganization: {information['org'].title()}\nASN: {information['as']}\n")
+    await event.client.send_message(messagelocation, f"هدف IP: {information['query']}\nدولة: {information['country']}\nكود الدولة: {information['countryCode']}\nمنطقة: {information['region']}\nاسم المنطقة: {information['regionName']}\nمدينة: {information['city']}\nZip: {information['zip']}\nخط العرض: {information['lat']}\nخط الطول: {information['lon']}\nوحده زمنية: {information['timezone']}\nISP: {information['isp'].عنوان()}\nمنظمة: {information['org'].عنوان()}\nASN: {information['as']}\n")
 
