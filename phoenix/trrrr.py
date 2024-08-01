@@ -38,7 +38,7 @@ async def gtrans(text, lan):
         return f"حدث خطأ \n{er}"
     return response
 
-@l313l.ar_cmd(
+@events.register(
     pattern="ترجمة ([\s\S]*)",
     command=("ترجمة", "tools"),
     info={
@@ -79,7 +79,7 @@ async def _(event):
         await edit_delete(event, f"**خطا:**\n`{exc}`", time=5)
 
 
-@l313l.ar_cmd(pattern="(الترجمة الفورية|الترجمه الفوريه|ايقاف الترجمة|ايقاف الترجمه)")
+@events.register(pattern="(الترجمة الفورية|الترجمه الفوريه|ايقاف الترجمة|ايقاف الترجمه)")
 async def reda(event):
     if gvarstatus("transnow"):
         delgvar("transnow")
@@ -88,7 +88,7 @@ async def reda(event):
         addgvar("transnow", "Reda") 
         await edit_delete(event, "**᯽︙ تم تفعيل الترجمه الفورية**")
 
-@l313l.ar_cmd(pattern="لغة الترجمة")
+@events.register(pattern="لغة الترجمة")
 async def Reda_is_Here(event):
     t = event.text.replace(".لغة الترجمة", "")
     t = t.replace(" ", "")
@@ -100,7 +100,7 @@ async def Reda_is_Here(event):
     await edit_delete(event, f"**᯽︙ تم تغير لغة الترجمة الى {lang} بنجاح ✓ **")
 
 # Reda
-@l313l.on(events.NewMessage(outgoing=True))
+@events.register(events.NewMessage(outgoing=True))
 async def reda(event):
     if gvarstatus("transnow"):
         if event.media or isinstance(event.media, types.MessageMediaDocument) or isinstance(event.media, types.MessageMediaInvoice):
