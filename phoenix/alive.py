@@ -27,7 +27,7 @@ $ `pkg install git`
 
 $ `pkg install python`
 
-$ `git clone https://github.com/1mrxe1/FINALUSERBOT`
+$ `git clone https://github.com/1mrxe1/FINALUSERBO`
 
 $ `python setup.py`
 
