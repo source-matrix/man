@@ -6,48 +6,7 @@ async def help(event):
         await event.delete()
         messagelocation = event.to_id
         await event.client.send_message(messagelocation, ("""
-**USERBOT HELP MENU**
-
-Umumiy modullar: 63
-<== **قائمة الرسوم المتحركة** ==>
-[01] قائمة المساعدة -.الاوامر
-[02] القنابل -  .bombs
-[03] التحميل - تحميل الرسوم المتحركة - .loading [04] الرموز التعبيرية  - .emoji <مع النص>
- [05] تفريغ - .dump
- [07] تايبر  - .type  <مع النص>
- [08] لول  - .lul
- [09] الأفعى -- .snake
- [10] نوثابي  -nothappy
- [11] الساعة  - .clock
-[12] مواه -  - .muah
-[13] القلب -.heart
- [14] جم - .gym
- [15] الأرض -.earth
-[16] القمر - .moon
-[17] كاندي -  .candy
- [18] اكتشف - .smoon
-[19] اكتشف tmoon.
- [20] المهرج - .clown
- [21] فراشة وقمر  .butterfly
-[22] الصناديق- .boxs
-[23] المطر - rain
- [24] كلول - "ماذا؟" - .clol
-[25] أودرا  - .odra
- [26]
-Fleavemeالرسوم المتحركة
-  [27] الحب -  - .loveu
-[28] الطائرة  - .plane
-[29] الشرطة  - .police
-[30] جيو - .jio
-[31] النظام الشمسي -  .solarsystem
- [33] رد الفعل - ردود الفعل - .react help
-[34] الثلج - .snow
-[35] السحر - قلوب متحركة - .magic
-[36] القلوب - قلوب متحركة -.hearts
- [37] ليلة سعيدة - .gn
-[38] جميل  - ..lovely
- [39] كيتديم -.ketdim
-[40] لماذا الرسوم المتحركة نيغا؟ - .why
+**قائمة الاوامر  **
 
 <== **اوامر خدمية** ==>
  [42] للمسؤول فقط كتم العضو مع الوقت  - .mute (m, h, d)
