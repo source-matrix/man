@@ -5,7 +5,7 @@ from datetime import datetime
 client = phoenix.client.client
 
 
-@events.register(events.NewMessage(pattern='\.ping'))
+@events.register(events.NewMessage(pattern='\.بنك'))
 async def ping(event):
     client.parse_mode = "html"
     start = datetime.now()
