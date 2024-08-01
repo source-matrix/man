@@ -4,7 +4,7 @@ import asyncio
 from telethon import events
 import phoenix.client
 client = phoenix.client.client
-@events.register(events.NewMessage(outgoing=True, pattern=".timer"))
+@events.register(events.NewMessage(outgoing=True, pattern=".مؤقت"))
 async def timer(event):
         msg=event.message.raw_text.split()
         t=int(msg[1])
@@ -37,7 +37,7 @@ async def numbers(event):
 @events.register(events.NewMessage(outgoing=True, pattern=".setclock"))
 async def setclock(event):
     from telethon.tl.functions.account import UpdateProfileRequest
-    await event.edit('Clock setting . . .')
+    await event.edit('ضبط الموقت . . .')
     sleep(0.5)
     msg=event.message.raw_text.split()
     t=int(msg[1])
@@ -47,12 +47,12 @@ async def setclock(event):
             today = datetime.today()
             time= today.strftime("| %H:%M |")
             await client(UpdateProfileRequest(last_name=str(time)))
-            await event.edit('Clock setted succesfully')
+            await event.edit('تم ضبط المؤقت')
             sleep(0.5)
             await event.delete()
             await asyncio.sleep(60)
             t-=1
-    await client(UpdateProfileRequest(last_name="Vaqt nisbiy tushuncha !!"))
+    await client(UpdateProfileRequest(last_name="الوقت مهوم نسبيا !!"))
  
 
 
@@ -62,7 +62,7 @@ from time import sleep
 
 @events.register(events.NewMessage(outgoing=True, pattern=r'\.finda'))
 async def runsda(event):
-    await event.edit("Qidirilmoqda...")
+    await event.edit("البحث عن...")
     sleep(1)
     await event.delete()
     messagelocation = event.to_id
