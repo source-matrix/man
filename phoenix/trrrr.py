@@ -1,13 +1,5 @@
-from asyncio import sleep
-import requests
-import json
-from gpytranslate import translate
-from phoenix import l313l
-from telethon import events, types
-from ..sql_helper.globals import addgvar, delgvar, gvarstatus
-from ..core.managers import edit_delete, edit_or_reply
-from ..helpers.functions import soft_deEmojify
-
+from gpytranslate import Translator
+from telethon import events
 langs = {
     'عربي': 'ar',
     'فارسي': 'fa',
