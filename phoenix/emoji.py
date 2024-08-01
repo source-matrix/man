@@ -4,14 +4,14 @@ from phoenix import emojify
 client = phoenix.client.client
 
 
-@events.register(events.NewMessage(pattern=".emoji(?: |$)(.*)"))
+@events.register(events.NewMessage(pattern=".ملصق"))
 async def itachi(event):
     args = event.pattern_match.group(1)
     if not args:
         get = await event.get_reply_message()
         args = get.text
     if not args:
-        await event.edit_or_reply(event, "Write in text...")
+        await event.edit_or_reply(event, "اكتب في النص..")
         return
     result = ""
     for a in args:
