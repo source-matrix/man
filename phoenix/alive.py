@@ -3,7 +3,7 @@ import phoenix.client
 import time
 client = phoenix.client.client
 
-@events.register(events.NewMessage(outgoing=True, pattern='\.التثبيت'))
+@events.register(events.NewMessage(outgoing=True, pattern='\.التنصيب'))
 async def alive(event):
 		client = event.client
 		me = await client.get_me()
