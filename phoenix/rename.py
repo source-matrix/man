@@ -4,7 +4,7 @@ import phoenix.client
 import time
 
 client = phoenix.client.client
-@events.register(events.NewMessage(pattern=r".تغيير الاسم (.*)", outgoing=True))
+@events.register(events.NewMessage(pattern=r".اسم", outgoing=True))
 async def rename(event):
     ok = await event.edit("تغيير اللقب...")
     names = event.pattern_match.group(1).strip() 
