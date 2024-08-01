@@ -29,7 +29,7 @@ gn = ["""
                        *   .      🛰     .        ✨      *
 """]
 
-@events.register(events.NewMessage(pattern=".gn"))
+@events.register(events.NewMessage(pattern=".نام"))
 async def goodnight(event):
   ggn = random.choice(gn)
   return await event.edit(ggn)
