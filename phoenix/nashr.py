@@ -1,4 +1,4 @@
-from telethon import phoenix.client, events
+from telethon import TelegramClient, events
 import asyncio
 import time
 
@@ -6,7 +6,7 @@ import time
 api_id = '23240929'
 api_hash = 'c86e205a2bca8d6381b30a0d7681bba0'
 
-client = phoenix.client('session', api_id, api_hash)
+client = TelegramClient('session', api_id, api_hash)
 
 is_running = False
 message_to_send = None
@@ -30,7 +30,7 @@ async def start_sending(event):
     await event.reply('بدء عملية النشر')
     asyncio.create_task(send_messages())
 
-@client.on(events.NewMessage(pattern='\.ايقاف_النشر'))
+@client.on(events.NewMessage(pattern='\.ايقاف'))
 async def stop_sending(event):
     global is_running
     if not is_running:
