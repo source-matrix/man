@@ -1,7 +1,7 @@
 from asyncio import sleep
 import requests
 import json
-from phoenix.helpers.functions.functions import translate
+from gpytranslate import translate
 from phoenix import l313l
 from telethon import events, types
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
