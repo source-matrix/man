@@ -5,10 +5,10 @@ import phoenix.client
 client = phoenix.client.client
 
 
-@events.register(events.NewMessage(outgoing=True, pattern='\.type'))
+@events.register(events.NewMessage(outgoing=True, pattern='\.يكتب'))
 async def type(event):
-    if ".type" == event.raw_text[:5]:
-        orig_text = event.raw_text.split(".type ", maxsplit=1)[1]
+    if ".يكتب" == event.raw_text[:5]:
+        orig_text = event.raw_text.split(".يكتب ", maxsplit=1)[1]
         text = orig_text
         pb = ""
         typing_symbol = "▒"
