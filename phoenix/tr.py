@@ -3,7 +3,7 @@ from telethon import events
 
 
 
-@events.register(events.NewMessage(pattern=".tr ?(.*)"))
+@events.register(events.NewMessage(pattern=".ترجم"))
 async def tr(event):
     if event.fwd_from:
         return
@@ -25,7 +25,7 @@ async def tr(event):
         after_tr_text = translated.text
         source_lan = await translator.detect(f'{translated.orig}')
         transl_lan = await translator.detect(f'{translated.text}')
-        output_str = "Message language: **{}**\nTranslated: **{}**\n\nMessage: {}".format(
+        output_str = "لغة الرسالة: **{}**\nمترجمة: **{}**\n\nرسالة: {}".format(
             source_lan,
             transl_lan,
             after_tr_text
