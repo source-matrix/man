@@ -3,11 +3,11 @@ import phoenix.client
 client = phoenix.client.client
 
 
-@events.register(events.NewMessage(outgoing=True, pattern='\.konspekt'))
+@events.register(events.NewMessage(outgoing=True, pattern='\.ملخص'))
 async def tconv(event):
     chat = await event.get_chat()
     replied_msg = await event.get_reply_message()
-    await event.edit("Kutilmoqda...")
+    await event.edit("انتظر...")
     await client.send_message('@Online_Konspekt_Bot', '/start')
     x = await replied_msg.forward_to('@Online_Konspekt_Bot')
 
