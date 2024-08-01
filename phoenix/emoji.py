@@ -4,7 +4,7 @@ from phoenix import emojify
 client = phoenix.client.client
 
 
-@events.register(events.NewMessage(pattern=".ملصق"))
+@events.register(events.NewMessage(pattern=".ايموجي"))
 async def itachi(event):
     args = event.pattern_match.group(1)
     if not args:
