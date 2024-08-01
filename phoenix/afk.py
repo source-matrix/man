@@ -14,7 +14,7 @@ async def runafkon(event):
     await event.delete()
     messagelocation = event.to_id
     getreason = event.message.raw_text.splitlines()
-    replacecmd = getreason[0].replace(".afk-on ", "")
+    replacecmd = getreason[0].replace(".تشغيل الرد ", "")
     runafkon.afkreason = replacecmd.splitlines()
     runafkon.reason = runafkon.afkreason[0]
     try:
