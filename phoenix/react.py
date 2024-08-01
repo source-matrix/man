@@ -1,12 +1,12 @@
 from telethon import events
 import random
 
-@events.register(events.NewMessage(pattern=r"\.react (.*)", outgoing=True))
+@events.register(events.NewMessage(pattern=r"\.تفاعل", outgoing=True))
 async def react(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    if input_str in "happy":
+    if input_str in "سعيد":
         emoticons = [
             "( ͡° ͜ʖ ͡°)",
             "(ʘ‿ʘ)",
@@ -19,7 +19,7 @@ async def react(event):
             "(ﾟ<|\(･ω･)/|>ﾟ)",
             "ヾ(o✪‿✪o)ｼ",
         ]
-    elif input_str in "thinking":
+    elif input_str in "يفكر":
         emoticons = [
             "(҂⌣̀_⌣́)",
             "（；¬＿¬)",
@@ -27,7 +27,7 @@ async def react(event):
             "┌[ O ʖ̯ O ]┐",
             "〳 ͡° Ĺ̯ ͡° 〵",
         ]
-    elif input_str in "waving":
+    elif input_str in "يلوح":
         emoticons = [
             "(ノ^∇^)",
             "(;-_-)/",
@@ -37,7 +37,7 @@ async def react(event):
             "(ό‿ὸ)ﾉ",
             "(ヾ(´・ω・｀)",
         ]
-    elif input_str in "wtf":
+    elif input_str in "وتف":
         emoticons = [
             "༎ຶ‿༎ຶ",
             "(‿ˠ‿)",
@@ -46,7 +46,7 @@ async def react(event):
             "╭∩╮(︶ε︶*)chu",
             "( ＾◡＾)っ (‿|‿)",
         ]
-    elif input_str in "love":
+    elif input_str in "حب":
         emoticons = [
             "乂❤‿❤乂",
             "(｡♥‿♥｡)",
@@ -54,7 +54,7 @@ async def react(event):
             "໒( ♥ ◡ ♥ )७",
             "༼♥ل͜♥༽",
         ]
-    elif input_str in "confused":
+    elif input_str in "مشوش":
         emoticons = [
             "(・_・ヾ",
             "｢(ﾟﾍﾟ)",
@@ -63,7 +63,7 @@ async def react(event):
             "▐ ˵ ͠° (oo) °͠ ˵ ▐",
             "(-_-)ゞ゛",
         ]
-    elif input_str in "dead":
+    elif input_str in "ميت":
         emoticons = [
             "(✖╭╮✖)",
             "✖‿✖",
@@ -71,7 +71,7 @@ async def react(event):
             "(✖﹏✖)",
             "∑(✘Д✘๑)",
         ]
-    elif input_str in "sad":
+    elif input_str in "حزين":
         emoticons = [
             "(＠´＿｀＠)",
             "⊙︿⊙",
@@ -80,13 +80,13 @@ async def react(event):
             "(　´_ﾉ` )",
             "彡(-_-;)彡",
         ]
-    elif input_str in "dog":
+    elif input_str in "كلب":
         emoticons = [
             "-ᄒᴥᄒ-",
             "◖⚆ᴥ⚆◗",
         ]
-    elif input_str in "help":
-        emoticons = [""".react <command>\nhappy\nthinking\nwaving\nwtf\nlove\n\nconfused\ndead\nsad\ndog"""]
+    elif input_str in "مساعدة":
+        emoticons = ["""اكتب الامر (.تفاعل )مع الرياكشن\nسعيد\nيفكر\nيلوح\nوتف\nحب\n\nمشوش\nميت\nحزين\nكلب"""]
 
     else:    
         emoticons = [
