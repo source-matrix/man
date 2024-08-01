@@ -2,7 +2,7 @@ from telethon import events
 import base64
 from time import sleep
 
-@events.register(events.NewMessage(outgoing=True, pattern=r'\.b64'))
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.تشفير'))
 async def runb64(event):
     await event.edit("wait...")
     options = event.message.raw_text.split()
@@ -13,7 +13,7 @@ async def runb64(event):
             secretmessagebytes = secretmessage.encode("ascii")
             encodesecretmessage = base64.b64encode(secretmessagebytes)
             encodesecretmessagebytes = encodesecretmessage.decode("ascii")
-            await event.edit("encoding...")
+            await event.edit("التشفير...")
             sleep(2)
             await event.edit(f"{encodesecretmessagebytes}")
         elif options[1] == "de":
@@ -21,12 +21,12 @@ async def runb64(event):
             secretkeybytes = secretkey.encode("ascii")
             decodesecretkey = base64.b64decode(secretkeybytes)
             decodesecretkeybytes = decodesecretkey.decode("ascii")
-            await event.edit("decoding...")
+            await event.edit("فك التشفير...")
             sleep(2)
-            await event.edit(f"Decoded message: {decodesecretkeybytes}")
+            await event.edit(f"الرسالة المفككة: {decodesecretkeybytes}")
         else:
-            await event.edit("Error!!!")
+            await event.edit("خطأ!!!")
     except IndexError:
-        await event.edit("write encode or decode: b64 en <reply>")
+        await event.edit("لكتابة ترميز او فك الترميز اكتب .تشفير بالرد على الرسالة")
     except:
-        await event.edit("Some error!!!") 
+        await event.edit("بعض الاخطاء!!!") 
