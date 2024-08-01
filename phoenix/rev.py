@@ -2,7 +2,7 @@ from telethon import events
 import phoenix.client
 client = phoenix.client.client
 
-@events.register(events.NewMessage(outgoing=True , pattern=r'\.rev'))
+@events.register(events.NewMessage(outgoing=True , pattern=r'\.عكس'))
 async def rev(event):
 	client = event.client
 	if event.is_reply:
