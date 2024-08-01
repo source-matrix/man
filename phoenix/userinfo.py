@@ -5,7 +5,7 @@ from os import remove
 
 client = phoenix.client.client
 
-@events.register(events.NewMessage(outgoing=True, pattern=r'\.userinfo'))
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.منو'))
 async def userinfo(event):
     await event.delete()
     try:
