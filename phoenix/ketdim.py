@@ -18,7 +18,7 @@ ketdi = ["░░░░░░🚜░░░░░░🏠\n████████
  "🇰 🇪 🇹 🇩 🇮 🇲🏠\n█████████████████"]
 @events.register(events.NewMessage)
 async def ketdihandlers(event):
-		if '.ketdim' in event.raw_text:
+		if '.ذهبت' in event.raw_text:
 			time.sleep(0.3)
 			for d in ketdi:
 				time.sleep(0.3)
