@@ -2,6 +2,6 @@ from telethon import events
 import phoenix.client
 client = phoenix.client.client
 
-@events.register(events.NewMessage(pattern=".fuck"))
+@events.register(events.NewMessage(pattern=".احم"))
 async def fuck(event):
 	await event.edit("┏━┳┳┳━┳┳┓\n┃━┫┃┃┏┫━┫┏┓\n┃┏┫┃┃┗┫┃┃┃┃\n┗┛┗━┻━┻┻┛┃┃\n┏┳┳━┳┳┳┓┏┫┣┳┓\n┣┓┃┃┃┃┣┫┃┏┻┻┫\n┃┃┃┃┃┃┃┃┣┻┫┃┃\n┗━┻━┻━┻┛┗━━━┛")
