@@ -1,8 +1,8 @@
 from asyncio import sleep
 import requests
 import json
-from JoKeRUB.helpers.functions.functions import translate
-from JoKeRUB import l313l
+from phoenix.helpers.functions.functions import translate
+from phoenix import l313l
 from telethon import events, types
 from ..sql_helper.globals import addgvar, delgvar, gvarstatus
 from ..core.managers import edit_delete, edit_or_reply
