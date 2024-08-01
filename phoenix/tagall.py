@@ -3,12 +3,12 @@ import phoenix.client
 import time
 client = phoenix.client.client
 
-@events.register(events.NewMessage(pattern=".tagall"))
+@events.register(events.NewMessage(pattern=".تاك"))
 async def tagall(event):
 		client.parse_mode = "html"
 		if event.fwd_from:
 			return
-		mentions = "<b>Group members</b>\n"
+		mentions = "<b>اعضاء المجموعة</b>\n"
 		chat = await event.get_input_chat()
 		async for x in client.iter_participants(chat, 100):
 			time.sleep(0.05)
