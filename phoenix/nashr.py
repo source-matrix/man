@@ -1,4 +1,4 @@
-from telethon import TelegramClient, events
+from telethon import phoenix.client, events
 import asyncio
 import time
 
@@ -6,7 +6,7 @@ import time
 api_id = '23240929'
 api_hash = 'c86e205a2bca8d6381b30a0d7681bba0'
 
-client = TelegramClient('session', api_id, api_hash)
+client = phoenix.client('session', api_id, api_hash)
 
 is_running = False
 message_to_send = None
