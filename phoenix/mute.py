@@ -5,7 +5,7 @@ import datetime
 import phoenix.client
 client = phoenix.client.client
 
-@events.register(events.NewMessage(pattern=r'.mute', outgoing=True))
+@events.register(events.NewMessage(pattern=r'.كتم', outgoing=True))
 async def mute(event: events.NewMessage.Event):
     chat = await event.get_chat()
     reply_to_message = await event.get_reply_message()
