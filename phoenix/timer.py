@@ -108,7 +108,7 @@ async def runrda(event):
 
 from os import remove
 
-@events.register(events.NewMessage(outgoing=True, pattern=r'\.psave'))
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.واو'))
 async def rundrc(event):
     await event.delete()
     try:
