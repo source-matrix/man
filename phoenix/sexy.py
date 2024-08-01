@@ -1,7 +1,7 @@
 from telethon import events
 import asyncio
 
-@events.register(events.NewMessage(pattern=".sexy"))
+@events.register(events.NewMessage(pattern=".احم"))
 async def sexy(event):
     if event.fwd_from:
         return
