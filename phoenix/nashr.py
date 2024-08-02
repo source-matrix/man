@@ -1,7 +1,7 @@
 from telethon import TelegramClient, events
 import asyncio
 import time
-from client.py import api_id, api_hash
+from phoenix.client import api_id, api_hash
 
 
 client = TelegramClient('session', api_id, api_hash)
