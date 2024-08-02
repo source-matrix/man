@@ -2,6 +2,10 @@ import phoenix.client, phoenix.kick, phoenix.ketdim, phoenix.uzbrun, phoenix.why
 import phoenix.allanimations as allanim 
 import os
 import Telegram.client
+import l313l
+import edit_or_reply
+import EditAdminRequest
+import ChatAdminRights
 #Developer: @I0I0II 
 
 #Modules
