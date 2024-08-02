@@ -1,9 +1,10 @@
 from telethon import TelegramClient, events
 import asyncio
 import time
+from client import api_id, api_hash
 
-# استبدل ببيانات تسجيل الدخول الخاصة بك
 
+client = TelegramClient('session', api_id, api_hash)
 is_running = False
 message_to_send = None
 interval = 10  # قيمة افتراضية للفترة الزمنية
