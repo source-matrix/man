@@ -2,62 +2,58 @@ from telethon import events, errors
 import phoenix.client
 import asyncio
 
-client = phoenix.client.client
+client = phoenix.client.client  # تأكد من تهيئة العميل بشكل صحيح
 
-# متغير عالمي لتخزين حالة النشر
-is_darkspam = False
+async def publish(event):
+    # استخراج الوقت والعدد والرسالة من الأوامر
+    args = event.message.raw_text.split()
+    if len(args) < 4:
+        await event.reply("الرجاء إدخال الأوامر بشكل صحيح: .نشر -الوقت -العدد- الرسالة")
+        return
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".نشر ?(.*)"))
-async def publish(e):
-    global is_darkspam
-    if is_darkspam:
-        return await e.edit("**النشر جاري بالفعل.**")
+    time_interval = int(args[1])
+    repeat_count = int(args[2])
+    message = " ".join(args[3:])
 
-    try:
-        args = e.text.split(" ", 3)
-        count = int(e.pattern_match.group(1))
-        dark = float(e.pattern_match.group(2))
-        msg = str(e.pattern_match.group(3))
-    except ValueError:
-        return await e.edit("**الرجاء إدخال الأرقام بشكل صحيح.**")
+    # الحصول على قائمة المجموعات التي يملكها المستخدم
+    my_chats = await client.get_dialogs()
+    groups = [chat for chat in my_chats if chat.is_group]
 
-    is_darkspam = True
-    await e.delete()
+    # وظيفة مساعدة للنشر في مجموعة معينة
+    async def publish_to_group(group):
+        for _ in range(repeat_count):
+            await client.send_message(group.entity, message)
+            await asyncio.sleep(time_interval)
 
-    try:
-        for i in range(count):
-            await e.respond(msg)
-            await asyncio.sleep(dark)
-    except errors.FloodWait as e:
-        await e.respond(f"**انتظر {e.seconds} ثانية.**")
-    except Exception as u:
-        await e.respond(f"**حدث خطأ: {u}**")
-    finally:
-        is_darkspam = False
+    # نشر الرسالة في كل مجموعة بالتوازي
+    await asyncio.gather(*(publish_to_group(group) for group in groups))
 
-@events.register(events.NewMessage(outgoing=True, pattern=r"\.إيقاف_النشر"))
-async def stop_darkspam(e):
-    global is_darkspam
-    if is_darkspam:
-        is_darkspam = False
-        await e.edit("**تم إيقاف النشر.**")
-    else:
-        await e.edit("**لم يكن هناك نشر جاري.**")
+async def repeat(event):
+    # استخراج الوقت والعدد
+    args = event.message.raw_text.split()
+    if len(args) < 3:
+        await event.reply("الرجاء إدخال الأوامر بشكل صحيح: .كرر -الوقت -العدد")
+        return
 
-# الكود الأصلي الخاص بالتكرار يبقى كما هو
-@events.register(events.NewMessage(outgoing=True, pattern=".تكرار ?(.*)"))
-async def darkspam(e):
-    try:
-        args = e.text.split(" ", 3)
-        dark = float(args[1])
-        count = int(args[2])
-        msg = str(args[3])
-    except BaseException:
-        return await e.edit("**هكذا :** الامر <الوقت> <العدد> <الرسالة>")
-    await e.delete()
-    try:
-        for i in range(count):
-            await e.respond(msg)
-            await asyncio.sleep(dark)
-    except Exception as u:
-        await e.respond(f"**Hatolik :** `{u}`")
+    time_interval = int(args[1])
+    repeat_count = int(args[2])
+
+    # الحصول على الرسالة الأصلية
+    original_message = event.message.reply_to_msg_id
+
+    for _ in range(repeat_count):
+        await client.forward_messages(event.chat_id, original_message)
+        await asyncio.sleep(time_interval)
+
+# معالجة الأوامر
+@client.on(events.NewMessage(pattern=".نشر"))
+async def handler(event):
+    await publish(event)
+
+@client.on(events.NewMessage(pattern=".كرر"))
+async def handler(event):
+    await repeat(event)
+
+# تشغيل العميل
+client.start()
+client.run_until_disconnected()
