@@ -1,11 +1,6 @@
 import phoenix.client, phoenix.kick, phoenix.ketdim, phoenix.uzbrun, phoenix.whyrun, phoenix.iloveyou, phoenix.goodnight, phoenix.ahelp, phoenix.konspekt, phoenix.lovelyrun, phoenix.bombs, phoenix.help, phoenix.loading, phoenix.emoji, phoenix.dump, phoenix.sexy, phoenix.type, phoenix.magicrun, phoenix.animation, phoenix.animation2, phoenix.mute, phoenix.fuck, phoenix.rev, phoenix.tr, phoenix.userinfo, phoenix.base64, phoenix.react, phoenix.snow, phoenix.smsbomb, phoenix.rename, phoenix.iptrace, phoenix.spam, phoenix.alive, phoenix.tagall, phoenix.afk, phoenix.timer, phoenix.ping,phoenix.nashr
 import phoenix.allanimations as allanim 
 import os
-import Telegram.client
-import l313l
-import edit_or_reply
-import EditAdminRequest
-import ChatAdminRights
 #Developer: @I0I0II 
 
 #Modules
