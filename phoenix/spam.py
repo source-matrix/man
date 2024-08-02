@@ -11,7 +11,77 @@ async def publish(event):
         await event.reply("الرجاء إدخال الأوامر بشكل صحيح: .نشر -الوقت -العدد- الرسالة")
         return
 
-    time_interval = int(args[1])
+    time_interval = int(args[1]from telethon import events, errors
+import phoenix.client
+import asyncio
+
+client = phoenix.client.client  # افترض أنك قمت بتكوين العميل بشكل صحيح
+
+# متغيرات عالمية لتخزين حالة النشر والتكرار
+is_publishing = False
+is_repeating = False
+publish_task = None
+repeat_task = None
+
+@client.on(events.NewMessage(pattern=r"\.نشر (-?\d+) (-?\d+) (.*)"))
+async def publish(event):
+    global is_publishing, publish_task
+    if is_publishing:
+        await event.reply("عملية النشر مستمرة بالفعل")
+        return
+
+    time_interval = int(event.pattern_match.group(1))  # الزمن بين كل نشر
+    count = int(event.pattern_match.group(2))  # عدد مرات النشر
+    message = event.pattern_match.group(3)  # الرسالة المراد نشرها
+
+    async def _publish():
+        for _ in range(count):
+            await client.send_message(event.chat_id, message)
+            await asyncio.sleep(time_interval)
+
+    is_publishing = True
+    publish_task = asyncio.create_task(_publish())
+    await event.reply("بدء عملية النشر")
+
+@client.on(events.NewMessage(pattern=r"\.ايقاف_النشر"))
+async def stop_publishing(event):
+    global is_publishing, publish_task
+    if is_publishing:
+        publish_task.cancel()
+        is_publishing = False
+        await event.reply("تم إيقاف عملية النشر")
+
+@client.on(events.NewMessage(pattern=r"\.كرر (-?\d+) (-?\d+)"))
+async def repeat(event):
+    global is_repeating, repeat_task
+    if is_repeating:
+        await event.reply("عملية التكرار مستمرة بالفعل")
+        return
+
+    time_interval = int(event.pattern_match.group(1))  # الزمن بين كل تكرار
+    count = int(event.pattern_match.group(2))  # عدد مرات التكرار
+    message = event.reply_to_msg.message  # الرسالة المراد تكرارها
+
+    async def _repeat():
+        for _ in range(count):
+            await event.reply(message)
+            await asyncio.sleep(time_interval)
+
+    is_repeating = True
+    repeat_task = asyncio.create_task(_repeat())
+    await event.reply("بدء عملية التكرار")
+
+@client.on(events.NewMessage(pattern=r"\.توقف"))
+async def stop_repeating(event):
+    global is_repeating, repeat_task
+    if is_repeating:
+        repeat_task.cancel()
+        is_repeating = False
+        await event.reply("تم إيقاف عملية التكرار")
+
+with client:
+    client.run_until_disconnected()
+
     repeat_count = int(args[2])
     message = " ".join(args[3:])
 
