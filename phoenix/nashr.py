@@ -1,35 +1,26 @@
-From telethon import TelegramClient, events
+from telethon import events
+import phoenix.client
 import asyncio
 import time
 
-# افترض أن phoenix.client يقوم بإدارة تسجيل الدخول والتواصل مع السيرفر
+client = phoenix.client.client  # تأكد من تهيئة العميل بشكل صحيح
 
-# قاموس لتخزين حالة الإرسال
-sending_status = {}
+async def send_messages(message, interval):
+    while True:
+        for dialog in await client.get_dialogs():
+            if dialog.is_group:
+                await client.send_message(dialog, message)
+        await asyncio.sleep(interval)
 
-@client.on(events.NewMessage(pattern=r'\.نشر'))
-async def start_sending(event):
-    # تحليل الأوامر
-    args = event.message.raw_text.split()
-    if len(args) < 3:
-        await event.reply('الرجاء استخدام الأمر بشكل صحيح: .نشر -الوقت- العدد')
-        return
+async def main():
+    while True:
+        command = input("أدخل الأمر (.نشر لبدء النشر، .ايقاف للتوقف): ")
+        if command == ".نشر":
+            message = input("أدخل الرسالة: ")
+            interval = int(input("أدخل الفترة الزمنية بين الرسائل بالثواني: "))
+            asyncio.create_task(send_messages(message, interval))
+        elif command == ".ايقاف":
+            break
 
-    try:
-        delay = int(args[1])
-        count = int(args[2])
-        reply_to = await event.get_reply_message()
-        message = reply_to.message
-    except ValueError:
-        await event.reply('الوقت والعدد يجب أن يكونا أعداد صحيحة')
-        return
-
-    # حفظ حالة الإرسال
-    chat_id = event.chat_id
-    sending_status[chat_id] = {'count': count, 'message': message, 'stop': False}
-
-    await event.reply('بدأ الإرسال')
-
-    # وظيفة مساعدة لإرسال الرسالة
-    async def send_messages():
-        while sending_status[chat_t]
+if __name__ == "__main__":
+    asyncio.run(main())
