@@ -3,7 +3,6 @@ import asyncio
 import time
 from phoenix.client import client 
 
-client = phoenix.client.client 
 
 is_running = False
 message_to_send = None
