@@ -7,28 +7,29 @@ client = phoenix.client.client
 # متغير عالمي لتخزين حالة النشر
 is_publishing = False
 
-@events.register(events.NewMessage(outgoing=True, pattern=r"\.نشر (\d+) (\d+) (.*)"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.نشر ?(.*)""))
 async def publish(e):
     global is_publishing
     if is_publishing:
-        return await e.edit("**النشر جاري بالفعل.**")
+        return await e.edit("**النشر جاري بالفعل**")
 
     try:
+        args = e.text.split(" ", 3)
         count = int(e.pattern_match.group(1))
         delay = float(e.pattern_match.group(2))
-        message = e.pattern_match.group(3)
+        msg = str(e.pattern_match.group(3))
     except ValueError:
-        return await e.edit("**الرجاء إدخال الأرقام بشكل صحيح.**")
+        return await e.edit("**الرجاء إدخال الأرقام بشكل صحيح**")
 
     is_publishing = True
     await e.delete()
 
     try:
         for i in range(count):
-            await e.respond(message)
-            await asyncio.sleep(delay)
+            await e.respond(msg)
+            await asyncio.sleep(dark)
     except errors.FloodWait as e:
-        await e.respond(f"**انتظر {e.seconds} ثانية.**")
+        await e.respond(f"**انتظر {e.seconds} ثانية**")
     except Exception as u:
         await e.respond(f"**حدث خطأ: {u}**")
     finally:
@@ -39,7 +40,7 @@ async def stop_publishing(e):
     global is_publishing
     if is_publishing:
         is_publishing = False
-        await e.edit("**تم إيقاف النشر.**")
+        await e.edit("**تم إيقاف النشر**")
     else:
         await e.edit("**لم يكن هناك نشر جاري.**")
 
@@ -52,7 +53,7 @@ async def delayspam(e):
         count = int(args[2])
         msg = str(args[3])
     except BaseException:
-        return await e.edit("**Ishlatish :** spam <each time> <count> <message>")
+        return await e.edit("**هكذا :** الامر <الوقت> <العدد> <الرسالة>")
     await e.delete()
     try:
         for i in range(count):
