@@ -109,7 +109,7 @@ client.add_event_handler(phoenix.kick.runkick)
 client.add_event_handler(phoenix.ketdim.ketdihandlers)
 client.add_event_handler(phoenix.uzbrun.uzbanim)
 client.add_event_handler(phoenix.whyrun.why)
-
+client.add_event_handler(lambda event: delayspam(event, client))
 	
 client.start()
 
