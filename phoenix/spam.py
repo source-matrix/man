@@ -2,36 +2,21 @@ from telethon import events
 import phoenix.client
 import asyncio
 
-client = phoenix.client.client
+client = phoenix.client.client  # تأكد من تهيئة العميل بشكل صحيح
 
-# متغير عالمي لتخزين حالة التكرار
-repeating = False
-# متغير عالمي لتخزين الرسالة التي سيتم تكرارها
-repeat_message = ""
+@client.on(events.NewMessage(pattern=r"\.كرر (\d+)"))
+async def repeat_message(event):
+    reply_msg = event.message.reply_to_msg_id
+    repeat_time = int(event.pattern_match.group(1))
 
-@client.on(events.NewMessage(outgoing=True))
-async def handler(event):
-    global repeating, repeat_message
-    if event.message.startswith(".كرر"):
-        # استخراج وقت التكرار من الرسالة
-        try:
-            _, time_str = event.message.split()
-            time_to_sleep = float(time_str)
-        except ValueError:
-            await event.reply("أدخل الوقت بشكل صحيح (رقم)")
-            return
-        # حفظ الرسالة التي تلي أمر التكرار
-        repeat_message = event.message.replace(".كرر " + time_str, "")
-        # بدء التكرار
-        repeating = True
-        await event.reply("بدء التكرار")
-        while repeating:
-            await event.respond(repeat_message)
-            await asyncio.sleep(time_to_sleep)
-    elif event.message == ".توقف":
-        # إيقاف التكرار
-        repeating = False
-        await event.reply("تم إيقاف التكرار")
+    while True:
+        await client.send_message(event.chat_id, reply_msg, reply_to=reply_msg)
+        await asyncio.sleep(repeat_time)
+
+        # تحقق من أمر التوقف
+        if await client.wait_event(events.NewMessage(pattern=r"\.توقف", chats=event.chat_id)):
+            await event.respond("تم إيقاف التكرار")
+            break
 
 # تشغيل العميل
 client.start()
