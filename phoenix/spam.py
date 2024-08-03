@@ -24,28 +24,36 @@ async def delayspam(e):
 
 @events.register(events.NewMessage(outgoing=True, pattern=".نشر ?(.*)"))
 async def publish_to_groups(e):
-    global stop_spamming
-    stop_spamming = False
-
     try:
-        args = e.text.split(" ", 3)
+        args = e.text.split(" ", 4)  # نسمح بمسافة إضافية للعدد الثاني
         delay = int(args[1])
-        message = str(args[2])
+        count = int(args[2])
+        message = str(args[3])
     except IndexError:
-        await e.edit("**استخدام خاطئ:** .نشر <عدد الثواني> <الرسالة>")
+        await e.edit("**استخدام خاطئ:** .نشر <عدد الثواني> <عدد المرات> <الرسالة>")
         return
 
     dialogs = await client.get_dialogs()
+
+    async def publish_to_group(dialog):
+        for _ in range(count):
+            await asyncio.sleep(delay)
+            try:
+                await client.send_message(dialog, message)
+            except Exception as ex:
+                print(f"حدث خطأ أثناء الإرسال إلى المجموعة {dialog.title}: {ex}")
+                
+    tasks = []
     for dialog in dialogs:
         if dialog.is_group:
-            await e.edit(f"بدء النشر في المجموعة: {dialog.title}")
-            while not stop_spamming:
-                await client.send_message(dialog, message)
-                await asyncio.sleep(delay)
+            task = asyncio.create_task(publish_to_group(dialog))
+            tasks.append(task)
+
+    await asyncio.gather(*tasks)
     await e.edit("تم الانتهاء من النشر")
 
-@events.register(events.NewMessage(outgoing=True, pattern=".ايقاف"))
-async def stop_spamming_command(e):
+@events.register(events.NewMessage(outgoing=True, pattern=".ايقاف_الكل"))
+async def stop_all_commands(e):
     global stop_spamming
     stop_spamming = True
-    await e.edit("تم إيقاف النشر")
+    await e.edit("تم إيقاف جميع الأوامر")
