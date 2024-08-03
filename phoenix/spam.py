@@ -31,7 +31,7 @@ async def get_groups(client):
 
 # معالج الأحداث لبدء عملية الإرسال
 @events.register(events.NewMessage(outgoing=True, pattern=r".نشر (\d+) (.*)"))
-async def delayspam(event):
+async def delayspam(event, client):  # تم إضافة client كمعامل
     try:
         delay_time = int(event.pattern_match.group(1))
         message = event.pattern_match.group(2)
