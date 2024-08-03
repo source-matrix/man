@@ -4,36 +4,35 @@ import asyncio
 
 client = phoenix.client.client
 
-# قاموس لتخزين حالة التكرار لكل مستخدم
-spamming_users = {}
+# متغير عالمي لتخزين حالة التكرار
+repeating = False
+# متغير عالمي لتخزين الرسالة التي سيتم تكرارها
+repeat_message = ""
 
-@events.register(events.NewMessage(outgoing=True, pattern=".كرر ?(.*)"))
-async def delayspam(e):
-    global spamming_users
-    try:
-        args = e.text.split(" ", 3)
-        dark = float(args[1])
-        count = int(args[2])
-        msg = str(args[3])
-    except BaseException:
-        return await e.edit("**هكذا :** الامر <الوقت> <العدد> <الرسالة>")
-    await e.delete()
-    try:
-        # تخزين حالة التكرار للمستخدم الحالي
-        spamming_users[e.sender_id] = True
-        for i in range(count):
-            if not spamming_users.get(e.sender_id, False):
-                break
-            await e.respond(msg)
-            await asyncio.sleep(dark)
-        # حذف حالة التكرار بعد الانتهاء
-        del spamming_users[e.sender_id]
-    except Exception as u:
-        await e.respond(f"**خطا :** `{u}`")
+@client.on(events.NewMessage(outgoing=True))
+async def handler(event):
+    global repeating, repeat_message
+    if event.message.startswith(".كرر"):
+        # استخراج وقت التكرار من الرسالة
+        try:
+            _, time_str = event.message.split()
+            time_to_sleep = float(time_str)
+        except ValueError:
+            await event.reply("أدخل الوقت بشكل صحيح (رقم)")
+            return
+        # حفظ الرسالة التي تلي أمر التكرار
+        repeat_message = event.message.replace(".كرر " + time_str, "")
+        # بدء التكرار
+        repeating = True
+        await event.reply("بدء التكرار")
+        while repeating:
+            await event.respond(repeat_message)
+            await asyncio.sleep(time_to_sleep)
+    elif event.message == ".توقف":
+        # إيقاف التكرار
+        repeating = False
+        await event.reply("تم إيقاف التكرار")
 
-@events.register(events.NewMessage(outgoing=True, pattern=".ايقاف_التكرار"))
-async def stopspam(e):
-    global spamming_users
-    # إيقاف التكرار للمستخدم الحالي
-    spamming_users[e.sender_id] = False
-    await e.respond("لقد توقف.")
+# تشغيل العميل
+client.start()
+client.run_until_disconnected()
