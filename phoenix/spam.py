@@ -57,3 +57,26 @@ async def stop_all_commands(e):
     global stop_spamming
     stop_spamming = True
     await e.edit("تم إيقاف جميع الأوامر")
+@events.register(events.NewMessage(outgoing=True, pattern=".تناوب ?(.*)"))
+async def publish_in_rotation(e):
+    try:
+        args = e.text.split(" ", 4)
+        delay = int(args[1])
+        count = int(args[2])
+        message = str(args[3])
+    except IndexError:
+        await e.edit("**استخدام خاطئ:** .تناوب <عدد الثواني> <عدد المرات> <الرسالة>")
+        return
+    dialogs = await client.get_dialogs()
+    groups = [dialog for dialog in dialogs if dialog.is_group]
+
+    for _ in range(count):
+        for group in groups:
+        try:
+            await client.send_message(group, message)
+          
+            await asyncio.sleep(delay)
+        except Exception as ex:
+            print(f"حدث خطأ أثناء الإرسال إلى المجموعة {group.title}: {ex}")
+            
+    await e.edit("تم الانتهاء من النشر بالتناوب")
