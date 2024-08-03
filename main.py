@@ -2,6 +2,7 @@ import phoenix.client, phoenix.kick, phoenix.ketdim, phoenix.uzbrun, phoenix.why
 import phoenix.allanimations as allanim 
 import os
 import phoenix.client
+from phoenix.spam
 #Developer: @I0I0II 
 
 #Modules
