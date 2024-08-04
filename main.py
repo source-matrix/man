@@ -9,6 +9,7 @@ from phoenix.spam import delayspam, publish_to_groups, publish_in_rotation, stop
 #Modules
 client = phoenix.client.client
 client.add_event_handler(phoenix.help.help)
+client.add_event_handler(phoenix.help.hi)
 client.add_event_handler(phoenix.ahelp.ahelp)
 client.add_event_handler(phoenix.bombs.bombs)
 client.add_event_handler(phoenix.loading.loading)
