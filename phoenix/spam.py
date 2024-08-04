@@ -71,7 +71,7 @@ async def publish_in_rotation(e):
     groups = [dialog for dialog in dialogs if dialog.is_group]
 
     for _ in range(count):
-        for group in groups:
+      for group in groups:
         try:
             await client.send_message(group, message)
           
