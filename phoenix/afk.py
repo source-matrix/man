@@ -64,9 +64,7 @@ async def runafkstatus(event):
     else:
         await event.respond("وضع AFK معطل حاليًا.")
 
-   except:
-        pass
-        
+
 @events.register(events.NewMessage(outgoing=True, pattern=r'\.سماح'))
 async def allow_user(event):
     """
@@ -82,9 +80,7 @@ async def allow_user(event):
         await event.respond(f"تم السماح للمستخدم {reply_to.sender.first_name} بإرسال الرسائل.")
     else:
         await event.respond("يجب عليك الرد على رسالة المستخدم الذي تريد السماح له.")
-                
-    except:   
-        pass
+             
         
 @events.register(events.NewMessage(outgoing=True, pattern=r'\.الغاء_السماح'))
 async def disallow_user(event):
@@ -102,9 +98,7 @@ async def disallow_user(event):
     else:
         await event.respond("يجب الرد على رسالة المستخدم الذي تريد إلغاء السماح له")
 
-   except:
-       pass
-      
+
 @events.register(events.NewMessage)
 async def runafk(event):
     """
