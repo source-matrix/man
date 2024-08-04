@@ -7,6 +7,9 @@ stop_spamming = False
 
 @events.register(events.NewMessage(outgoing=True, pattern=".تكرار ?(.*)"))
 async def delayspam(e):
+    global stop_spamming
+    if stop_spamming:
+        return
     try:
         args = e.text.split(" ", 3)
         dark = float(args[1])
