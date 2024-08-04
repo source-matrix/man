@@ -3,9 +3,11 @@ from datetime import datetime
 from time import sleep
 from telethon.tl.functions.users import GetFullUserRequest
 
-
+# قم بتعديل هذه القيمة لتحديد عدد التحذيرات المسموح به
+MAX_WARNINGS = 10
 
 afkmode = set([])
+allowed_users = set()  # قائمة المستخدمين المستثنين
 
 @events.register(events.NewMessage(outgoing=True, pattern=r'\.تشغيل الرد'))
 async def runafkon(event):
@@ -52,102 +54,67 @@ async def runafkoff(event):
 
 @events.register(events.NewMessage(outgoing=True, pattern=r'\.الرد'))
 async def runafkstatus(event):
-    await event.edit("جار المعالجة...")
-    sleep(2)
-    await event.delete()
-    messagelocation = event.to_id
-    try:
-        statusinformation = []
-        if afkmode:
-            for details in afkmode:
-                statusinformation.append(details)
-            convertdata = "\n".join(statusinformation)
-            await event.client.send_message(messagelocation, f"استعلام عن الرد التلقائي: {convertdata.title()}")
-        else:
-            await event.client.send_message(messagelocation, "الرد التلقائي معطل بشكل افتراضي")
-    except:
-        pass
+    """
+    هذه الدالة تظهر حالة وضع "بعيد عن لوحة المفاتيح" (AFK) الحالي.
+    """
+    if "on" in afkmode:
+        await event.respond("وضع AFK مفعل حاليًا.")
+        if runafkon.reason:
+            await event.respond(f"السبب: {runafkon.reason}")
+    else:
+        await event.respond("وضع AFK معطل حاليًا.")
 
+   except:
+        pass
+        
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.سماح'))
+async def allow_user(event):
+    """
+    هذه الدالة تسمح لمستخدم محدد بإرسال الرسائل إليك دون الحصول على رد تلقائي.
+
+    :param event: حدث الرسالة الواردة.
+    """
+
+    reply_to = await event.get_reply_message()
+    if reply_to:
+        user_id = reply_to.sender_id
+        allowed_users.add(user_id)
+        await event.respond(f"تم السماح للمستخدم {reply_to.sender.first_name} بإرسال الرسائل.")
+    else:
+        await event.respond("يجب عليك الرد على رسالة المستخدم الذي تريد السماح له.")
+                
+    except:   
+        pass
+        
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.الغاء_السماح'))
+async def disallow_user(event):
+    """
+    هذا الدالة تقوم بإزالة مستخدم من قائمة المستثنين
+    """
+    reply_to = await event.get_reply_message()
+    if reply_to:
+        user_id = reply_to.sender_id
+        if user_id in allowed_users:
+            allowed_users.remove(user_id)
+            await event.respond(f"تم إلغاء السماح للمستخدم {reply_to.sender.first_name}")
+        else:
+            await event.respond("هذا المستخدم ليس ضمن القائمة البيضاء")
+    else:
+        await event.respond("يجب الرد على رسالة المستخدم الذي تريد إلغاء السماح له")
+
+   except:
+       pass
+      
 @events.register(events.NewMessage)
 async def runafk(event):
-    if event.is_private:
-        getridogramuserdetails = await event.client(GetFullUserRequest("me"))
-        ridogramuser = getridogramuserdetails.users[0].id
-        user = await event.get_chat()
-        messagelocation = user.id
-        replylocation = event.id
-        senderinformation = await event.client(GetFullUserRequest(user.id))
-        itisbot = senderinformation.users[0].bot
-        isridogramuser = await event.get_sender()
-        try:
-            if "on" in afkmode:
-                if itisbot == True:
-                    pass
-                else:
-                    if user.id == ridogramuser:
-                        pass
-                    else:
-                        if ridogramuser == isridogramuser.id:
-                            pass
-                        else:
-                            end = datetime.now()
-                            total = (end - runafkon.start)
-                            countthetime = int(total.seconds)
-                            sd = countthetime // (24 * 3600)
-                            countthetime %= 24 * 3600
-                            sh = countthetime // 3600
-                            countthetime %= 3600
-                            sm = countthetime // 60
-                            countthetime %= 60
-                            ss = countthetime
-                            endtime = ""
-                            if sd > 0:
-                                endtime += f"{sd}day {sh}hour {sm}minute {ss}second"
-                            elif sh > 0:
-                                endtime += f"{sh}hour {sm}minute {ss}second"
-                            else:
-                                endtime += f"{sm}minute {ss}second" if sm > 0 else f"{ss}second"
-                            if runafkon.reason:
-                                if ".afk-on" in runafkon.reason:
-                                    await event.client.send_message(messagelocation, f"عزيزي {user.first_name},\n.\n., ..\n\nاخر ظهور: {endtime}\n\n.", reply_to=replylocation)
-                                else:
-                                    await event.client.send_message(messagelocation, f"عزيزي {user.first_name},\n\n.: {runafkon.reason}\nاخر ظهور: {endtime}\n\n.", reply_to=replylocation)
-                            else:
-                                await event.client.send_message(messagelocation, f"عزيزي {user.first_name},\n.\n.,..\n\nاخر ظهور: {endtime}\n\n.", reply_to=replylocation)
-        except:
-            pass
+    """
+    هذه الدالة هي المسؤولة عن التعامل مع رسائل المستخدمين عندما يكون البوت في وضع "بعيد عن لوحة المفاتيح" (AFK).
 
-@events.register(events.NewMessage)
-async def runmcfafk(event):
-    checkmention = event.mentioned
-    messagelocation = event.to_id
-    replylocation = event.id
-    try:
+    :param event: حدث الرسالة الواردة.
+    """
+
+    if event.is_private:
         if "on" in afkmode:
-            if checkmention == True:
-                end = datetime.now()
-                total = (end - runafkon.start)
-                countthetime = int(total.seconds)
-                sd = countthetime // (24 * 3600)
-                countthetime %= 24 * 3600
-                sh = countthetime // 3600
-                countthetime %= 3600
-                sm = countthetime // 60
-                countthetime %= 60
-                ss = countthetime
-                endtime = ""
-                if sd > 0:
-                    endtime += f"{sd}d {sh}h {sm}m {ss}s"
-                elif sh > 0:
-                    endtime += f"{sh}h {sm}m {ss}s"
-                else:
-                    endtime += f"{sm}m {ss}s" if sm > 0 else f"{ss}s"
-                if runafkon.reason:
-                    if ".afk-on" in runafkon.reason:
-                        await event.client.send_message(messagelocation, f"Avto javob bergich\nKechirasiz, men hozir telegramga kiraolmayman, iltimos, xabar qoldiring.\n\nLast Seen: {endtime}\n\nThank You", reply_to=replylocation)
-                    else:
-                        await event.client.send_message(messagelocation, f"\n\nReason: {runafkon.reason}\nLast Seen: {endtime}\n\nThank You", reply_to=replylocation)
-                else:
-                    await event.client.send_message(messagelocation, f"Avto javob bergich\nKechirasiz, men hozir telegramga kiraolmayman, iltimos, xabar qoldiring.\n\nLast Seen: {endtime}\n\nThank You", reply_to=replylocation)
-    except:
-        pass
+            if user.id not in allowed_users:             
+                warnings = 10
+                await event.client.send_message(messagelocation, f"انا مشغول الان. كلمني فيما بعد. لديك {warnings} تحذيرات اذا بقيت مستمرا في الارسال سيتم حظرك", reply_to=replylocation)
