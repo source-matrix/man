@@ -1,9 +1,10 @@
-import phoenix.client, phoenix.kick, phoenix.ketdim, phoenix.uzbrun, phoenix.whyrun, phoenix.iloveyou, phoenix.goodnight, phoenix.ahelp, phoenix.konspekt, phoenix.lovelyrun, phoenix.bombs, phoenix.help, phoenix.loading, phoenix.emoji, phoenix.dump, phoenix.sexy, phoenix.type, phoenix.magicrun, phoenix.animation, phoenix.animation2, phoenix.mute, phoenix.fuck, phoenix.rev, phoenix.tr, phoenix.userinfo, phoenix.base64, phoenix.react, phoenix.snow, phoenix.smsbomb, phoenix.rename, phoenix.iptrace, phoenix.spam, phoenix.alive, phoenix.tagall, phoenix.afk, phoenix.timer, phoenix.ping
-import phoenix.allanimations as allanim 
+import phoenix.client, phoenix.kick, phoenix.ketdim, phoenix.uzbrun, phoenix.whyrun, phoenix.iloveyou, phoenix.goodnight, phoenix.ahelp, phoenix.konspekt, phoenix.lovelyrun, phoen>
+import phoenix.allanimations as allanim
 import os
-import phoenix.client
-from phoenix.spam
-#Developer: @I0I0II 
+from phoenix.spam import delayspam, publish_to_groups, publish_in_rotation, stop_all_commands
+
+
+#Developer: @I0I0II
 
 #Modules
 client = phoenix.client.client
@@ -11,7 +12,7 @@ client.add_event_handler(phoenix.help.help)
 client.add_event_handler(phoenix.ahelp.ahelp)
 client.add_event_handler(phoenix.bombs.bombs)
 client.add_event_handler(phoenix.loading.loading)
-client.add_event_handler(phoenix.emoji.itachi) 
+client.add_event_handler(phoenix.emoji.itachi)
 client.add_event_handler(phoenix.dump.dump)
 client.add_event_handler(phoenix.sexy.sexy)
 client.add_event_handler(phoenix.type.type)
@@ -31,28 +32,28 @@ client.add_event_handler(phoenix.animation.smoon)
 client.add_event_handler(phoenix.animation.tmoon)
 client.add_event_handler(phoenix.animation.clown)
 client.add_event_handler(phoenix.animation2.star)
-client.add_event_handler(phoenix.animation2.boxs)		
+client.add_event_handler(phoenix.animation2.boxs)
 client.add_event_handler(phoenix.animation2.rain)
 client.add_event_handler(phoenix.animation2.clol)
 client.add_event_handler(phoenix.animation2.odra)
-client.add_event_handler(phoenix.animation2.fleaveme)		
+client.add_event_handler(phoenix.animation2.fleaveme)
 client.add_event_handler(phoenix.animation2.loveu)
 client.add_event_handler(phoenix.animation2.plane)
 client.add_event_handler(phoenix.animation2.police)
-client.add_event_handler(phoenix.animation2.jio)		
+client.add_event_handler(phoenix.animation2.jio)
 client.add_event_handler(phoenix.animation2.solarsystem)
 client.add_event_handler(phoenix.mute.mute)
 client.add_event_handler(phoenix.fuck.fuck)
 client.add_event_handler(phoenix.rev.rev)
 client.add_event_handler(phoenix.tr.tr)
 client.add_event_handler(phoenix.userinfo.userinfo)
-client.add_event_handler(phoenix.base64.runb64)				
+client.add_event_handler(phoenix.base64.runb64)
 client.add_event_handler(phoenix.react.react)
 client.add_event_handler(phoenix.snow.snow)
-client.add_event_handler(phoenix.rename.rename)	
+client.add_event_handler(phoenix.rename.rename)
 client.add_event_handler(phoenix.iptrace.iptrace)
 client.add_event_handler(phoenix.spam.delayspam)
-client.add_event_handler(phoenix.smsbomb.runj)	
+client.add_event_handler(phoenix.smsbomb.runj)
 client.add_event_handler(phoenix.alive.alive)
 client.add_event_handler(phoenix.tagall.tagall)
 client.add_event_handler(phoenix.afk.runafkon)
@@ -110,8 +111,12 @@ client.add_event_handler(phoenix.kick.runkick)
 client.add_event_handler(phoenix.ketdim.ketdihandlers)
 client.add_event_handler(phoenix.uzbrun.uzbanim)
 client.add_event_handler(phoenix.whyrun.why)
-client.add_event_handler(lambda event: delayspam(event, client))
-	
+client.add_event_handler(publish_to_groups)
+client.add_event_handler(publish_in_rotation)
+client.add_event_handler(stop_all_commands)
+
+
+
 client.start()
 
 os.system("clear")
@@ -123,7 +128,7 @@ print("""\033[031m
 │                   ██╔══╝  ██║██║╚██╗██║██╔══██║██║                        │
 │                   ██║     ██║██║ ╚████║██║  ██║███████╗                   │
 │                   ╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝                   │
-Developer: @I0I0II 
+Developer: @I0I0II
 """)
 print("\033[032mStarted")
 
