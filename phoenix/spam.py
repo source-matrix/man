@@ -42,7 +42,7 @@ async def publish_to_groups(e):
                 await client.send_message(dialog, message)
             except Exception as ex:
                 print(f"حدث خطأ أثناء الإرسال إلى المجموعة {dialog.title}: {ex}")
-                
+
     tasks = []
     for dialog in dialogs:
         if dialog.is_group:
@@ -74,9 +74,9 @@ async def publish_in_rotation(e):
       for group in groups:
         try:
             await client.send_message(group, message)
-          
+
             await asyncio.sleep(delay)
         except Exception as ex:
             print(f"حدث خطأ أثناء الإرسال إلى المجموعة {group.title}: {ex}")
-            
+
     await e.edit("تم الانتهاء من النشر بالتناوب")
