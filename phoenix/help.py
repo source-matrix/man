@@ -34,3 +34,10 @@ async def help(event):
 
 Developer: @I0I0II
 """))
+@events.register(events.NewMessage(outgoing=True, pattern=".فحص"))
+async def hi(event):
+        await event.delete()
+        messagelocation = event.to_id
+        await event.client.send_message(messagelocation, ("""
+        جميع `.الاوامر` تعمل اتمنى لك وقتا طيبا 
+        """))
