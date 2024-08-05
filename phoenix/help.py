@@ -37,7 +37,7 @@ async def hi(event):
         await event.client.send_message(messagelocation, ("""
         السورس يعمل جيدا .اكتب `.الاوامر` 
         """))
-        @events.register(events.NewMessage(outgoing=True, pattern=".فحص"))
+@events.register(events.NewMessage(outgoing=True, pattern=".النشر"))
 async def hip(event):
         await event.delete()
         messagelocation = event.to_id
