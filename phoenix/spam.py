@@ -5,7 +5,7 @@ import asyncio
 client = phoenix.client.client
 stop_spamming = False
 
-@events.register(events.NewMessage(outgoing=True, pattern=".تكرار ?(.*)"))
+@events.register(events.NewMessage(outgoing=True, pattern=".كرر ?(.*)"))
 async def delayspam(e):
     global stop_spamming
     if stop_spamming:
