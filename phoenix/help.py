@@ -34,14 +34,9 @@ Developer: @I0I0II
 @events.register(events.NewMessage(outgoing=True, pattern=".فحص"))
 async def hi(event):
     await event.delete()
-    messagelocation = event.to_id
-
-    # تحميل الفيديو من الرابط
+    messaglocation = event.to_id
     video = await client.download_media("https://t.me/yuoppn/2")
-
-    # إرسال الفيديو مع الوصف
     await client.send_file(messaglocation, video, caption="السورس يعمل جيدا .اكتب `.الاوامر`")
-
 @events.register(events.NewMessage(outgoing=True, pattern=".النشر"))
 async def hip(event):
         await event.delete()
