@@ -8,7 +8,7 @@ async def help(event):
         await event.client.send_message(messagelocation, ("""
 
 
-<== **اوامر خدمية** ==>
+<== *اوامر بسطة** ==>
 
 
  [1]الامر `.كتم` يقوم بكتم العضو مع تحديد الوقت ساعة يوم شهر  - (m, h, d)
@@ -23,7 +23,9 @@ async def help(event):
 
 [6]الامر `.واو` بيستخدم لحفظ الصور والفيديوهات المؤقته (بالرد على الصورة)
 
-[++] لعرض اوامر التسلية  اكتب `.تسلية`
+[++] اكتب `.النشر`  لاستعراض انواع النشر
+
+[++] اكتب `.تسلية` لاستعراض اوامر التسلية 
 
 
 Developer: @I0I0II
@@ -33,10 +35,10 @@ async def hi(event):
         await event.delete()
         messagelocation = event.to_id
         await event.client.send_message(messagelocation, ("""
-        جميع `.الاوامر` تعمل اتمنى لك وقتا طيبا 
+        السورس يعمل جيدا .اكتب `.الاوامر` 
         """))
         @events.register(events.NewMessage(outgoing=True, pattern=".فحص"))
-async def hi(event):
+async def hip(event):
         await event.delete()
         messagelocation = event.to_id
         await event.client.send_message(messagelocation, ("""
