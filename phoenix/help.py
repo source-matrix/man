@@ -8,7 +8,7 @@ async def help(event):
         await event.client.send_message(messagelocation, ("""
 
 
-<== *اوامر بسطة** ==>
+<== *اوامر بسيطة** ==>
 
 
  [1]الامر `.كتم` يقوم بكتم العضو مع تحديد الوقت ساعة يوم شهر  - (m, h, d)
