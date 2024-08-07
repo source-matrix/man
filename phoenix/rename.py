@@ -9,7 +9,7 @@ client = phoenix.client.client
 @events.register(events.NewMessage(pattern=r".اسمي (.*)", outgoing=True))
 async def change_name_with_time(event):
     while True:
-        now = datetime.datetime.now()
+        now = datetime.now()
         current_time = now.strftime("%H:%M")
         user_name = event.pattern_match.group(1)
         new_name = f"{user_name} {current_time}"
