@@ -1,153 +1,65 @@
 from telethon import events
 from datetime import datetime
-from time import sleep
+import asyncio
 from telethon.tl.functions.users import GetFullUserRequest
 
-
-
-afkmode = set([])
+afk_mode = False
+custom_reply = "أنا لست موجودًا الآن، أرجوك اترك رسالتك وانتظر لحين عودتي."
+reply_to_message = None
 
 @events.register(events.NewMessage(outgoing=True, pattern=r'\.تشغيل الرد'))
-async def runafkon(event):
-    await event.edit("انتظر...")
-    sleep(2)
+async def enable_afk(event):
+    global afk_mode
+    afk_mode = True
+    await event.edit("تم تشغيل الرد التلقائي.")
+    await asyncio.sleep(2)
     await event.delete()
-    messagelocation = event.to_id
-    getreason = event.message.raw_text.splitlines()
-    replacecmd = getreason[0].replace(".تشغيل الرد ", "")
-    runafkon.afkreason = replacecmd.splitlines()
-    runafkon.reason = runafkon.afkreason[0]
-    try:
-        if afkmode:
-            if "متوقف" in afkmode:
-                afkmode.remove("متوقف")
-        afkmodeon = "يعمل"
-        if afkmodeon in afkmode:
-            await event.client.send_message(messagelocation, "تم تنشيط وضع الرد التلقائي بالفعل وتم تحديث بياناتك قسراً")
-        else:
-            afkmode.add(afkmodeon)
-            runafkon.start = datetime.now()
-            await event.client.send_message(messagelocation, "تم تشغيل وضع الرد ")
-    except:
-        pass
 
 @events.register(events.NewMessage(outgoing=True, pattern=r'\.تعطيل الرد'))
-async def runafkoff(event):
-    await event.edit("انتظر...")
-    sleep(2)
+async def disable_afk(event):
+    global afk_mode
+    afk_mode = False
+    await event.edit("تم تعطيل الرد التلقائي.")
+    await asyncio.sleep(2)
     await event.delete()
-    messagelocation = event.to_id
-    try:
-        afkmodeoff = "متوقف"
-        if "يعمل" in afkmode:
-            afkmode.remove("يعمل")
-            runafkon.afkreason.clear()
-        if afkmodeoff in afkmode:
-            await event.client.send_message(messagelocation, "تم ايقاف الرد التلقائي")
-        else:
-            afkmode.add(afkmodeoff)
-            await event.client.send_message(messagelocation, "تم بنجاح ايقاف الرد")
-    except:
-        pass
 
-@events.register(events.NewMessage(outgoing=True, pattern=r'\.الرد'))
-async def runafkstatus(event):
-    await event.edit("انتظر...")
-    sleep(2)
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.كليشة الرد'))
+async def set_reply_template(event):
+    global reply_to_message
+    reply_to_message = await event.get_reply_message()
+    if reply_to_message:
+        await event.edit(f"تم تعيين كليشة الرد إلى الرسالة المحددة.")
+    else:
+        await event.edit("يرجى الرد على الرسالة التي تريد استخدامها ككليشة.")
+    await asyncio.sleep(2)
     await event.delete()
-    messagelocation = event.to_id
-    try:
-        statusinformation = []
-        if afkmode:
-            for details in afkmode:
-                statusinformation.append(details)
-            convertdata = "\n".join(statusinformation)
-            await event.client.send_message(messagelocation, f"حالة الرد التلقائي: {convertdata.title()}")
-        else:
-            await event.client.send_message(messagelocation, "وضع الرد التلقائي معطل بشكل افتراضي")
-    except:
-        pass
 
 @events.register(events.NewMessage)
-async def runafk(event):
-    if event.is_private:
-        getridogramuserdetails = await event.client(GetFullUserRequest("me"))
-        ridogramuser = getridogramuserdetails.users[0].id
-        user = await event.get_chat()
-        messagelocation = user.id
-        replylocation = event.id
-        senderinformation = await event.client(GetFullUserRequest(user.id))
-        itisbot = senderinformation.users[0].bot
-        isridogramuser = await event.get_sender()
-        try:
-            if "on" in afkmode:
-                if itisbot == True:
-                    pass
-                else:
-                    if user.id == ridogramuser:
-                        pass
-                    else:
-                        if ridogramuser == isridogramuser.id:
-                            pass
-                        else:
-                            end = datetime.now()
-                            total = (end - runafkon.start)
-                            countthetime = int(total.seconds)
-                            sd = countthetime // (24 * 3600)
-                            countthetime %= 24 * 3600
-                            sh = countthetime // 3600
-                            countthetime %= 3600
-                            sm = countthetime // 60
-                            countthetime %= 60
-                            ss = countthetime
-                            endtime = ""
-                            if sd > 0:
-                                endtime += f"{sd}day {sh}hour {sm}minute {ss}second"
-                            elif sh > 0:
-                                endtime += f"{sh}hour {sm}minute {ss}second"
-                            else:
-                                endtime += f"{sm}minute {ss}second" if sm > 0 else f"{ss}second"
-                            if runafkon.reason:
-                                if ".afk-on" in runafkon.reason:
-                                    await event.client.send_message(messagelocation, f"Dear {user.first_name},\nAvto javob bergich\nKechirasiz, men hozir telegramga kiraolmayman, iltimos, xabar qoldiring.\n\nLast Seen: {endtime}\n\nThank You", reply_to=replylocation)
-                                else:
-                                    await event.client.send_message(messagelocation, f"Dear {user.first_name},\n\nReason: {runafkon.reason}\nLast Seen: {endtime}\n\nThank You", reply_to=replylocation)
-                            else:
-                                await event.client.send_message(messagelocation, f"Dear {user.first_name},\nAvto javob bergich\nKechirasiz, men hozir telegramga kiraolmayman, iltimos, xabar qoldiring.\n\nLast Seen: {endtime}\n\nThank You", reply_to=replylocation)
-        except:
-            pass
+async def afk_handler(event):
+    global afk_mode
+    if not afk_mode and not await event.client.is_user_authorized():
+        afk_mode = True
+
+    if afk_mode and event.is_private:
+        me = await event.client.get_me()
+        sender = await event.get_sender()
+        if sender.id != me.id and not sender.bot:
+            if reply_to_message:
+                await event.reply(reply_to_message)
+            else:
+                await event.reply(custom_reply)
+
+async def check_connection_periodically():
+    while True:
+        if not await event.client.is_user_authorized():
+            await asyncio.sleep(60)
+        else:
+            global afk_mode
+            afk_mode = False
+            break
 
 @events.register(events.NewMessage)
-async def runmcfafk(event):
-    checkmention = event.mentioned
-    messagelocation = event.to_id
-    replylocation = event.id
-    try:
-        if "on" in afkmode:
-            if checkmention == True:
-                end = datetime.now()
-                total = (end - runafkon.start)
-                countthetime = int(total.seconds)
-                sd = countthetime // (24 * 3600)
-                countthetime %= 24 * 3600
-                sh = countthetime // 3600
-                countthetime %= 3600
-                sm = countthetime // 60
-                countthetime %= 60
-                ss = countthetime
-                endtime = ""
-                if sd > 0:
-                    endtime += f"{sd}d {sh}h {sm}m {ss}s"
-                elif sh > 0:
-                    endtime += f"{sh}h {sm}m {ss}s"
-                else:
-                    endtime += f"{sm}m {ss}s" if sm > 0 else f"{ss}s"
-                if runafkon.reason:
-                    if ".afk-on" in runafkon.reason:
-                        await event.client.send_message(messagelocation, f"Avto javob bergich\nKechirasiz, men hozir telegramga kiraolmayman, iltimos, xabar qoldiring.\n\nLast Seen: {endtime}\n\nThank You", reply_to=replylocation)
-                    else:
-                        await event.client.send_message(messagelocation, f"\n\nReason: {runafkon.reason}\nLast Seen: {endtime}\n\nThank You", reply_to=replylocation)
-                else:
-                    await event.client.send_message(messagelocation, f"Avto javob bergich\nKechirasiz, men hozir telegramga kiraolmayman, iltimos, xabar qoldiring.\n\nLast Seen: {endtime}\n\nThank You", reply_to=replylocation)
-    except:
-        pass
+async def start_background_tasks(event):
+    if event.original_update.message.id == 1:
+        asyncio.create_task(check_connection_periodically())
+
