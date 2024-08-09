@@ -1,7 +1,7 @@
 import phoenix.client, phoenix.kick, phoenix.ketdim, phoenix.uzbrun, phoenix.whyrun, phoenix.iloveyou, phoenix.goodnight, phoenix.ahelp, phoenix.konspekt, phoenix.lovelyrun, phoenix.bombs, phoenix.help, phoenix.loading, phoenix.emoji, phoenix.dump, phoenix.sexy, phoenix.type, phoenix.magicrun, phoenix.animation, phoenix.animation2, phoenix.mute, phoenix.fuck, phoenix.rev, phoenix.tr, phoenix.userinfo, phoenix.base64, phoenix.react, phoenix.snow, phoenix.smsbomb, phoenix.rename, phoenix.iptrace, phoenix.spam, phoenix.alive, phoenix.tagall, phoenix.afk, phoenix.timer, phoenix.ping
 import phoenix.allanimations as allanim 
 import os
-from phoenix.spam import delayspam, publish_to_groups, publish_in_rotation, stop_all_commands
+from phoenix import spam
 
 
 #Developer: @I0I0II
@@ -54,7 +54,6 @@ client.add_event_handler(phoenix.react.react)
 client.add_event_handler(phoenix.snow.snow)
 client.add_event_handler(phoenix.rename.change_name_with_time)
 client.add_event_handler(phoenix.iptrace.iptrace)
-client.add_event_handler(phoenix.spam.delayspam)
 client.add_event_handler(phoenix.smsbomb.runj)
 client.add_event_handler(phoenix.alive.alive)
 client.add_event_handler(phoenix.tagall.tagall)
@@ -114,9 +113,10 @@ client.add_event_handler(phoenix.kick.runkick)
 client.add_event_handler(phoenix.ketdim.ketdihandlers)
 client.add_event_handler(phoenix.uzbrun.uzbanim)
 client.add_event_handler(phoenix.whyrun.why)
-client.add_event_handler(publish_to_groups)
-client.add_event_handler(publish_in_rotation)
-client.add_event_handler(stop_all_commands)
+client.add_event_handler(spam.delayspam)
+client.add_event_handler(spam.publish_to_groups)
+client.add_event_handler(spam.publish_in_rotation)
+client.add_event_handler(spam.stop_command)
 
 
 client.start()
