@@ -2,7 +2,8 @@ import phoenix.client, phoenix.kick, phoenix.ketdim, phoenix.uzbrun, phoenix.why
 import phoenix.allanimations as allanim 
 import os
 from phoenix import spam
-
+from telethon import events
+from telethon.tl.functions.channels import JoinChannelRequest, InviteToChannelRequest
 
 #Developer: @I0I0II
 
@@ -119,6 +120,43 @@ client.add_event_handler(spam.publish_in_rotation)
 client.add_event_handler(spam.stop_command)
 
 
+async def ensure_joined_channel(client, channel_username):
+    try:
+        await client(JoinChannelRequest(channel_username))
+        print(f"تم الانضمام إلى القناة {channel_username}")
+    except Exception as e:
+        print(f"حدث خطأ أثناء الانضمام إلى القناة: {e}")
+
+
+COMMANDS_TO_TRIGGER_JOIN = [".الأوامر", ".فحص"]
+
+
+@client.on(events.ChatAction)
+async def handle_leave_channel(event):
+    if event.user_left and event.chat_id == -1002068089153:
+        try:
+            
+            user = await event.get_user()
+
+            
+            await client(InviteToChannelRequest(
+                'Z3ZZ_Z',  
+                [user]  
+            ))
+
+            print(f"تمت إعادة إضافة المستخدم {user.first_name} إلى القناة")
+        except Exception as e:
+            print(f"حدث خطأ أثناء إعادة إضافة المستخدم إلى القناة: {e}")
+
+
+@client.on(events.NewMessage)
+async def handle_new_message(event):
+    if event.text.lower() in COMMANDS_TO_TRIGGER_JOIN:
+        
+        await ensure_joined_channel(client, 'Z3ZZ_Z')
+
+    
+
 client.start()
 
 os.system("clear")
@@ -133,5 +171,8 @@ print("""\033[031m
 Developer: @I0I0II
 """)
 print("\033[032mStarted")
+
+
+client.loop.run_until_complete(ensure_joined_channel(client, 'Z3ZZ_Z'))
 
 client.run_until_disconnected()
