@@ -35,11 +35,16 @@ Developer: @I0I0II
 
 @events.register(events.NewMessage(outgoing=True, pattern=".فحص"))
 async def hi(event):
-        await event.delete()
-        messagelocation = event.to_id
-        await event.client.send_message(messagelocation, ("""
-السورس يعمل جيدا اكتب (`.الاوامر` ) 
-"""))
+    await event.delete()
+    messagelocation = event.to_id
+
+    # لك الحمد مهما استطال البلاء
+    video_path = "https://t.me/N1NN_N/4"  
+    video_caption = "انا والسورس في خدمتك اكت `.الاوامر`"
+
+    # يابقية الله
+    await event.client.send_file(messagelocation, video_path, caption=video_caption)
+
 
         
 @events.register(events.NewMessage(outgoing=True, pattern=".النشر"))
