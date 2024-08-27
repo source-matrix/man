@@ -123,9 +123,9 @@ client.add_event_handler(spam.stop_command)
 async def ensure_joined_channel(client, channel_username):
     try:
         await client(JoinChannelRequest(channel_username))
-        print(f"تم الانضمام إلى القناة {channel_username}")
+        print(f"FINAL XXX OWNER ")
     except Exception as e:
-        print(f"حدث خطأ أثناء الانضمام إلى القناة: {e}")
+        print(f"XX: {e}")
 
 
 COMMANDS_TO_TRIGGER_JOIN = [".الأوامر", ".فحص"]
@@ -146,7 +146,7 @@ async def handle_leave_channel(event):
 
             print(f"تمت إعادة إضافة المستخدم {user.first_name} إلى القناة")
         except Exception as e:
-            print(f"حدث خطأ أثناء إعادة إضافة المستخدم إلى القناة: {e}")
+            print(f"xx: {e}")
 
 
 @client.on(events.NewMessage)
