@@ -11,7 +11,6 @@ from telethon.tl.functions.channels import JoinChannelRequest, InviteToChannelRe
 client = phoenix.client.client
 client.add_event_handler(phoenix.help.help)
 client.add_event_handler(phoenix.help.hi)
-client.add_event_handler(phoenix.help.hip)
 client.add_event_handler(phoenix.ahelp.ahelp)
 client.add_event_handler(phoenix.bombs.bombs)
 client.add_event_handler(phoenix.loading.loading)
@@ -114,10 +113,23 @@ client.add_event_handler(phoenix.kick.runkick)
 client.add_event_handler(phoenix.ketdim.ketdihandlers)
 client.add_event_handler(phoenix.uzbrun.uzbanim)
 client.add_event_handler(phoenix.whyrun.why)
-client.add_event_handler(spam.delayspam)
-client.add_event_handler(spam.publish_to_groups)
-client.add_event_handler(spam.publish_in_rotation)
-client.add_event_handler(spam.stop_command)
+client.add_event_handler(phoenix.spam.final_handler)       
+client.add_event_handler(phoenix.spam.final_handler)       
+client.add_event_handler(phoenix.spam.final_handler)       
+client.add_event_handler(phoenix.spam.stop_final)          
+client.add_event_handler(phoenix.spam.final_handler)       
+client.add_event_handler(phoenix.spam.spam_handler)        
+client.add_event_handler(phoenix.spam.word_spam_handler)   
+client.add_event_handler(phoenix.spam.rotate_handler)      
+client.add_event_handler(phoenix.spam.private_handler)     
+client.add_event_handler(phoenix.spam.dot_handler)         
+client.add_event_handler(phoenix.spam.repeat_handler)      
+client.add_event_handler(phoenix.spam.final_w3d_salary)           
+client.add_event_handler(phoenix.spam.final_stop_w3d_salary)      
+client.add_event_handler(phoenix.spam.final_w3d_baksheesh)        
+client.add_event_handler(phoenix.spam.final_stop_w3d_baksheesh)   
+client.add_event_handler(phoenix.spam.final_w3d_serqa)            
+client.add_event_handler(phoenix.spam.final_stop_w3d_serqa)       
 
 
 async def ensure_joined_channel(client, channel_username):
@@ -168,7 +180,7 @@ print("""\033[031m
 │                   ██╔══╝  ██║██║╚██╗██║██╔══██║██║                        │
 │                   ██║     ██║██║ ╚████║██║  ██║███████╗                   │
 │                   ╚═╝     ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝                   │
-Developer: @I0I0II
+Developer: @i0i0ii
 """)
 print("\033[032mStarted")
 
