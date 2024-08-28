@@ -5,10 +5,10 @@ client = phoenix.client.client
 async def help(event):
         await event.delete()
         messagelocation = event.to_id
-        await event.client.send_message(messagelocation, ("""
+        await event.client.send_message(messagelocation, ("""**
 
 
-<== *اوامر بسيطة** ==>
+<== اوامر بسيطة ==>
 
 
  [1]الامر `.كتم` يقوم بكتم العضو مع تحديد الوقت ساعة يوم شهر  - (m, h, d)
@@ -31,7 +31,7 @@ async def help(event):
 
 
 Developer: @I0I0II
-"""))
+**"""))
 
 @events.register(events.NewMessage(outgoing=True, pattern=".فحص"))
 async def hi(event):
@@ -47,30 +47,3 @@ async def hi(event):
 
 
         
-@events.register(events.NewMessage(outgoing=True, pattern=".النشر"))
-async def hip(event):
-        await event.delete()
-        messagelocation = event.to_id
-        await event.client.send_message(messagelocation, ("""
-        **انواع النشر المتوفر**
-
-ء--------——————————----
-[1]-الامر  `.نشر` يقوم بالنشر بكل المجموعات لديك دفعة واحده (الامر-الثواني-العدد- بالرد على الرسالة )
- 
-
-ء--------——————————----
-[2]-الامر `.تناوب` يعمل للنشر في كل المجموعات بالتسلسل واحد بعد الاخرى.. هذا الخيار الافضل لتجنب حذف الحساب والحظر (الامر-الثواني -العدد -بالرد على الرسالة)
-
- 
-ء--------——————————----
-[3]- الامر `.كرر` يقوم بتكرار الرسالة بنفس المكان ( الامر -الثواني -العدد-بالرد على الرسالة )
-
-ء--------——————————----
- **ملاحظة**
- لايقاف اي عملية من العمليات الموجودة 
- اكتب  (`.ايقاف`) مع اسم الامر الذي يعمل 
- لايقاف عمل .نشر اكتب (`.ايقاف .نشر) 
- لايقاف عمل .تناوب اكتب (`ايقاف .تناوب`)
- لايقاف امر .كرر اكتب (`.ايقاف .كرر`)
- 
-        """))
