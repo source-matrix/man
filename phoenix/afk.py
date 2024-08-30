@@ -3,13 +3,13 @@ from datetime import datetime
 import asyncio
 import pickle 
 
-afk_mode = False  # للرد التلقائي 
+afk_mode = False   
 custom_reply = "أنا لست موجودًا الآن، أرجوك اترك رسالتك وانتظر لحين عودتي."
 reply_to_message = None
-custom_replies = {}  # قاموس لحفظ الردود المخصصة
-custom_replies_enabled = False  # متغير لتشغيل/إيقاف الردود المخصصة
+custom_replies = {}  
+custom_replies_enabled = False  
 
-# محاولة تحميل الردود المحفوظة من الملف عند بدء التشغيل
+
 try:
     with open('custom_replies.pickle', 'rb') as f:
         custom_replies = pickle.load(f)
@@ -98,11 +98,11 @@ async def reply_handler(event):
         if sender.id != me.id and not sender.bot:
             if custom_replies_enabled:
                 for trigger, reply in custom_replies.items():
-                    if trigger in event.raw_text:  # التحقق من وجود الكلمة ضمن الجملة
+                    if trigger in event.raw_text:  
                         await event.reply(reply)
-                        break  # الخروج من الحلقة بعد إيجاد أول تطابق
-            if afk_mode:  # التحقق من حالة الرد التلقائي بعد الردود المخصصة
-                if not event.raw_text in custom_replies:  # تجنب تكرار الرد إذا تم الرد عليه بالفعل
+                        break  
+            if afk_mode:  
+                if not event.raw_text in custom_replies:  
                     if reply_to_message:
                         await event.reply(reply_to_message)
                     else:
