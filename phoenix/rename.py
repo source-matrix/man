@@ -14,7 +14,7 @@ async def update_name_periodically(event):
             await event.client(UpdateProfileRequest(first_name=new_name))
         except Exception as ex:
             print(f"حدث خطأ: {str(ex)}")
-        await asyncio.sleep(60)
+        await asyncio.sleep(59)
 
 @events.register(events.NewMessage(pattern=r".اسمي (.*)", outgoing=True))
 async def change_name_with_time(event):
