@@ -47,7 +47,7 @@ async def mute(event: events.NewMessage.Event):
         print(e)
         await event.edit('حدث خطأ أثناء الكتم.')
 
-@events.register(events.NewMessage(pattern=r'.سماح (\d+)', outgoing=True))
+@events.register(events.NewMessage(pattern=r'.الغاء التقييد (\d+)', outgoing=True))
 async def unmute(event: events.NewMessage.Event):
     chat = await event.get_chat()
     user_id = int(event.pattern_match.group(1)) 
