@@ -8,7 +8,7 @@ client = phoenix.client.client
 
 muted_users = {}
 
-@events.register(events.NewMessage(pattern=r'.كتم (\d+)', outgoing=True))
+@events.register(events.NewMessage(pattern=r'.تقييد (\d+)', outgoing=True))
 async def mute(event: events.NewMessage.Event):
     chat = await event.get_chat()
     user_id = int(event.pattern_match.group(1))
