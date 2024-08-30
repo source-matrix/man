@@ -1,11 +1,20 @@
 from telethon import events
 from datetime import datetime
 import asyncio
-from telethon.tl.functions.users import GetFullUserRequest
+import pickle 
 
-afk_mode = False
+afk_mode = False  # للرد التلقائي 
 custom_reply = "أنا لست موجودًا الآن، أرجوك اترك رسالتك وانتظر لحين عودتي."
 reply_to_message = None
+custom_replies = {}  # قاموس لحفظ الردود المخصصة
+custom_replies_enabled = False  # متغير لتشغيل/إيقاف الردود المخصصة
+
+# محاولة تحميل الردود المحفوظة من الملف عند بدء التشغيل
+try:
+    with open('custom_replies.pickle', 'rb') as f:
+        custom_replies = pickle.load(f)
+except FileNotFoundError:
+    pass
 
 @events.register(events.NewMessage(outgoing=True, pattern=r'\.تشغيل الرد'))
 async def enable_afk(event):
@@ -15,11 +24,20 @@ async def enable_afk(event):
     await asyncio.sleep(2)
     await event.delete()
 
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.المخصص تشغيل'))
+async def enable_custom_replies(event):
+    global custom_replies_enabled
+    custom_replies_enabled = True
+    await event.edit("تم تشغيل الردود المخصصة.")
+    await asyncio.sleep(2)
+    await event.delete()
+
 @events.register(events.NewMessage(outgoing=True, pattern=r'\.تعطيل الرد'))
-async def disable_afk(event):
-    global afk_mode
+async def disable_replies(event):
+    global afk_mode, custom_replies_enabled
     afk_mode = False
-    await event.edit("تم تعطيل الرد التلقائي.")
+    custom_replies_enabled = False
+    await event.edit("تم تعطيل الرد التلقائي والردود المخصصة.")
     await asyncio.sleep(2)
     await event.delete()
 
@@ -34,32 +52,58 @@ async def set_reply_template(event):
     await asyncio.sleep(2)
     await event.delete()
 
-@events.register(events.NewMessage)
-async def afk_handler(event):
-    global afk_mode
-    if not afk_mode and not await event.client.is_user_authorized():
-        afk_mode = True
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.رد (.*)'))
+async def add_custom_reply(event):
+    global custom_replies
+    reply_to_message = await event.get_reply_message()
+    if reply_to_message:
+        trigger_text = reply_to_message.raw_text
+        reply_text = event.pattern_match.group(1).strip()
+        if len(custom_replies) < 20:
+            custom_replies[trigger_text] = reply_text
+            with open('custom_replies.pickle', 'wb') as f:
+                pickle.dump(custom_replies, f)
+            await event.edit(f"تم إضافة الرد المخصص بنجاح. لديك الآن {len(custom_replies)} ردود مخصصة.")
+        else:
+            await event.edit("لقد وصلت إلى الحد الأقصى للردود المخصصة (20).")
+    else:
+        await event.edit("يرجى الرد على الرسالة التي تريد إضافة رد مخصص لها.")
+    await asyncio.sleep(2)
+    await event.delete()
 
-    if afk_mode and event.is_private:
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.حذف رد'))
+async def delete_custom_reply(event):
+    global custom_replies
+    reply_to_message = await event.get_reply_message()
+    if reply_to_message:
+        trigger_text = reply_to_message.raw_text
+        if trigger_text in custom_replies:
+            del custom_replies[trigger_text]
+            with open('custom_replies.pickle', 'wb') as f:
+                pickle.dump(custom_replies, f)
+            await event.edit("تم حذف الرد المخصص بنجاح.")
+        else:
+            await event.edit("لم يتم العثور على رد مخصص لهذه الرسالة.")
+    else:
+        await event.edit("يرجى الرد على الرسالة التي تريد حذف ردها المخصص.")
+    await asyncio.sleep(2)
+    await event.delete()
+
+@events.register(events.NewMessage)
+async def reply_handler(event):
+    global afk_mode, custom_replies, custom_replies_enabled
+    if (afk_mode or custom_replies_enabled) and event.is_private:
         me = await event.client.get_me()
         sender = await event.get_sender()
         if sender.id != me.id and not sender.bot:
-            if reply_to_message:
-                await event.reply(reply_to_message)
-            else:
-                await event.reply(custom_reply)
-
-async def check_connection_periodically():
-    while True:
-        if not await event.client.is_user_authorized():
-            await asyncio.sleep(60)
-        else:
-            global afk_mode
-            afk_mode = False
-            break
-
-@events.register(events.NewMessage)
-async def start_background_tasks(event):
-    if event.original_update.message.id == 1:
-        asyncio.create_task(check_connection_periodically())
-
+            if custom_replies_enabled:
+                for trigger, reply in custom_replies.items():
+                    if trigger in event.raw_text:  # التحقق من وجود الكلمة ضمن الجملة
+                        await event.reply(reply)
+                        break  # الخروج من الحلقة بعد إيجاد أول تطابق
+            if afk_mode:  # التحقق من حالة الرد التلقائي بعد الردود المخصصة
+                if not event.raw_text in custom_replies:  # تجنب تكرار الرد إذا تم الرد عليه بالفعل
+                    if reply_to_message:
+                        await event.reply(reply_to_message)
+                    else:
+                        await event.reply(custom_reply)
