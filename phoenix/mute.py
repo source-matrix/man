@@ -28,14 +28,14 @@ async def mute(event: events.NewMessage.Event):
 
         entity = await client.get_entity(chat.id)
 
-        if isinstance(entity, Channel):  # إذا كانت المجموعة قناة، نقوم بتقييد المستخدم
+        if isinstance(entity, Channel):  
             await client(EditBannedRequest(chat.id, user_id, rights))
             await event.edit(f"تم تقييد المستخدم {user_id} في هذه القناة.")
-        else:  # إذا كانت الدردشة خاصة، نضيف المستخدم إلى muted_users لحذف رسائله لاحقًا
+        else: 
             me = await client.get_me()
             my_permissions = await client.get_permissions(chat, me)
 
-            if my_permissions.is_admin:  # هذا التحقق غير ضروري في الدردشة الخاصة، لكن نحتفظ به للتأكد
+            if my_permissions.is_admin:  
                 muted_users[user_id] = chat.id
                 await event.edit(f"سيتم حذف رسائل المستخدم {user_id} في هذه الدردشة.")
             else:
