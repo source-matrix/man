@@ -281,13 +281,13 @@ async def handle_reply(event):
     if event.message.text.lower() == '.كتم':
         if user_id not in muted_users:
             muted_users.append(user_id)
-            await event.reply('اششش لدوخني.')
+            await event.reply('تم الكتم ')
         else:
             await event.reply('اي كاتمة من قبل')
     elif event.message.text.lower() == '.الغاء الكتم':
         if user_id in muted_users:
             muted_users.remove(user_id)
-            await event.reply('تم يلا احجي')
+            await event.reply('تم الغاء الكتم')
         else:
             await event.reply('هذا مامكتوم اكتمة ؟')
 
