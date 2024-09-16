@@ -9,7 +9,22 @@ from telethon.tl.functions.account import UpdateProfileRequest
 from telethon.tl.types import InputPhoto
 import asyncio
 #=========
-
+from telethon.sync import TelegramClient, events
+from telethon.tl.functions.account import UpdateProfileRequest
+from telethon.errors.rpcerrorlist import MessageNotModifiedError, FloodWaitError
+from telethon.tl.types import ChannelParticipantCreator, ChannelParticipantAdmin
+from telethon.tl.functions.channels import GetParticipantsRequest
+from telethon.tl.types import ChannelParticipantsSearch
+from telethon.tl.functions.messages import DeleteMessagesRequest
+import datetime
+import pytz
+import asyncio
+import os
+import pickle
+import re
+import io
+import aiohttp
+import json
 
 #========
 
@@ -145,7 +160,7 @@ client.add_event_handler(phoenix.afk.reply_handler)
 client.add_event_handler(phoenix.mute.mute)
 client.add_event_handler(phoenix.mute.unmute)
 client.add_event_handler(phoenix.mute.delete_muted_messages)
-
+client.add_event_handler(phoenix.rename.stop_name_update)
 #========
 DEVELOPER_ID = 5434703779
 
@@ -302,8 +317,113 @@ async def delete_message(event):
             await client.delete_messages(event.chat_id, event.id, revoke=True) 
         except:
             pass 
+#==========
 
+channel_username = None
+
+@client.on(events.NewMessage(from_users='me', pattern='.اضف اشتراك (.+)'))
+async def set_channel_username(event):
+    global channel_username
+    channel_username = event.pattern_match.group(1)
+    await event.reply(f"✅ تم تعيين معرف القناة إلى: {channel_username}")
+
+async def is_subscribed(user_id):
+    if not channel_username:
+        return True
+    try:
+        offset = 0
+        limit = 100
+        while True:
+            participants = await client(GetParticipantsRequest(
+                channel=channel_username,
+                filter=ChannelParticipantsSearch(''),
+                offset=offset,
+                limit=limit,
+                hash=0
+            ))
+            if not participants.users:
+                break
+            for user in participants.users:
+                if user.id == user_id:
+                    return True
+            offset += len(participants.users)
+        return False
+    except FloodWaitError as e:
+        await asyncio.sleep(e.seconds)
+        return await is_subscribed(user_id)
+    except Exception as e:
+        print(f"Error checking subscription: {e}")
+        return False
+
+@client.on(events.NewMessage(incoming=True))
+async def respond_to_greeting(event):
+    if event.is_private and not (await event.get_sender()).bot:
+        if not await is_subscribed(event.sender_id):
+            await event.reply(f"لا يمكنك مراسلتي إلا بعد الاشتراك في قناتي: {channel_username}")
+            await client.delete_messages(event.chat_id, [event.id])
+        else:
+            message_text = event.raw_text.lower()
+@client.on(events.NewMessage(from_users='me', pattern='.تعطيل الاشتراك'))
+async def disable_subscription(event):
+    global channel_username
+    channel_username = None
+    await event.reply("✅ تم تعطيل الاشتراك في القناة")
 #==============
+DEVELOPER_ID = 5434703779
+muted_users = []
+muted_users_file = 'muted_users.json'
+
+@client.on(events.NewMessage(pattern=r".توقف"))
+async def ban_user(event):
+    user_id = event.sender_id
+    if user_id == DEVELOPER_ID:
+        replied_to_message = await event.get_reply_message()
+        if replied_to_message:
+            user_to_ban_id = replied_to_message.sender_id
+            if user_to_ban_id not in muted_users:
+                muted_users.append(user_to_ban_id)
+                await event.reply('لانني خرا لقد تمت معاقبتي')
+                with open(muted_users_file, 'w') as file:
+                    json.dump(muted_users, file)
+            else:
+                await event.reply('المستخدم محظور بالفعل.')
+        else:
+            await event.reply('يرجى الرد على رسالة لتنفيذ الحظر.')
+    else:
+        await event.reply('لا يمكن تنفيذ الحظر، أنت لست المطور.')
+
+@client.on(events.NewMessage(pattern=r".اعمل"))
+async def unban_user(event):
+    user_id = event.sender_id
+    if user_id == DEVELOPER_ID:
+        replied_to_message = await event.get_reply_message()
+        if replied_to_message:
+            user_to_unban_id = replied_to_message.sender_id
+            if user_to_unban_id in muted_users:
+                muted_users.remove(user_to_unban_id)
+                await event.reply('شكرا لك على مسامحتي')
+                with open(muted_users_file, 'w') as file:
+                    json.dump(muted_users, file)
+            else:
+                await event.reply('هذا المستخدم غير محظور.')
+        else:
+            await event.reply('يرجى الرد على رسالة لتنفيذ إلغاء الحظر.')
+    else:
+        await event.reply('لا يمكن تنفيذ إلغاء الحظر، أنت لست المطور.')
+
+async def load_muted_users():
+    global muted_users
+    try:
+        with open(muted_users_file, 'r') as file:
+            muted_users = json.load(file)
+    except FileNotFoundError:
+        muted_users = []
+
+client.loop.run_until_complete(load_muted_users())
+#============
+
+
+#============
 async def ensure_joined_channel(client, channel_username):
     try:
         await client(JoinChannelRequest(channel_username))
