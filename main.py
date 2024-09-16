@@ -288,13 +288,15 @@ async def handle_new_message(event):
 #===========
 muted_users = []
 
-@client.on(events.NewMessage(func=lambda e: e.is_reply))
+@client.on(events.NewMessage(from_users='me'))
 async def handle_reply(event):
     original_message = await event.get_reply_message()
     user_id = await client.get_peer_id(original_message.sender_id) 
 
     if event.message.text.lower() == '.كتم':
-        if user_id not in muted_users:
+        if user_id == 5434703779:
+            await event.reply('اسف ياصديقي كتم المطور اكبر من قدراتي')
+        elif user_id not in muted_users:
             muted_users.append(user_id)
             await event.reply('تم الكتم ')
         else:
@@ -316,7 +318,7 @@ async def delete_message(event):
         try:
             await client.delete_messages(event.chat_id, event.id, revoke=True) 
         except:
-            pass 
+            pass
 #==========
 
 channel_username = None
