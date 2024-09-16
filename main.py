@@ -239,7 +239,7 @@ async def forgive(event):
 
 storage_group_id = None
 
-@client.on(events.NewMessage(pattern="\.اضف مجموعة التخزين"))
+@client.on(events.NewMessage(from_users='me', pattern="\.اضف مجموعة التخزين"))
 async def set_storage_group(event):
     global storage_group_id
     reply = await event.get_reply_message()
