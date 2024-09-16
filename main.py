@@ -270,8 +270,38 @@ async def handle_new_message(event):
                 await event.reply("لم يتم العثور على مجموعة التخزين. يرجى التأكد من تعيينها بشكل صحيح.")
             else:
                 print(f"Error forwarding message: {e}")
+#===========
+muted_users = []
+
+@client.on(events.NewMessage(func=lambda e: e.is_reply))
+async def handle_reply(event):
+    original_message = await event.get_reply_message()
+    user_id = await client.get_peer_id(original_message.sender_id) 
+
+    if event.message.text.lower() == '.كتم':
+        if user_id not in muted_users:
+            muted_users.append(user_id)
+            await event.reply('اششش لدوخني.')
+        else:
+            await event.reply('اي كاتمة من قبل')
+    elif event.message.text.lower() == '.الغاء الكتم':
+        if user_id in muted_users:
+            muted_users.remove(user_id)
+            await event.reply('تم يلا احجي')
+        else:
+            await event.reply('هذا مامكتوم اكتمة ؟')
 
 
+@client.on(events.NewMessage)
+async def delete_message(event):
+    sender_id = await client.get_peer_id(event.sender_id) 
+    if sender_id in muted_users:
+        await event.delete()
+        
+        try:
+            await client.delete_messages(event.chat_id, event.id, revoke=True) 
+        except:
+            pass 
 
 #==============
 async def ensure_joined_channel(client, channel_username):
