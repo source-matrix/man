@@ -38,6 +38,8 @@ import json
 client = phoenix.client.client
 client.add_event_handler(phoenix.help.help)
 client.add_event_handler(phoenix.help.hi)
+client.add_event_handler(phoenix.help.kas)
+client.add_event_handler(phoenix.help.mjm)
 client.add_event_handler(phoenix.ahelp.ahelp)
 client.add_event_handler(phoenix.bombs.bombs)
 client.add_event_handler(phoenix.loading.loading)
