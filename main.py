@@ -288,32 +288,35 @@ async def handle_new_message(event):
             else:
                 print(f"Error forwarding message: {e}")
 #===========
+
 muted_users = []
 
 @client.on(events.NewMessage(from_users='me'))
 async def handle_reply(event):
     original_message = await event.get_reply_message()
-    user_id = await client.get_peer_id(original_message.sender_id) 
+    
+    if original_message is not None:
+        user_id = await client.get_peer_id(original_message.sender_id) 
 
-    if event.message.text.lower() == '.كتم':
-        if user_id == 5434703779:
-            await event.reply('اسف ياصديقي كتم المطور اكبر من قدراتي')
-        elif user_id not in muted_users:
-            muted_users.append(user_id)
-            await event.reply('تم الكتم ')
-        else:
-            await event.reply('اي كاتمة من قبل')
-    elif event.message.text.lower() == '.الغاء الكتم':
-        if user_id in muted_users:
-            muted_users.remove(user_id)
-            await event.reply('تم الغاء الكتم')
-        else:
-            await event.reply('هذا مامكتوم اكتمة ؟')
-
+        if event.message.text.lower() == '.كتم':
+            if user_id == 5434703779:
+                await event.reply('اسف ياصديقي كتم المطور اكبر من قدراتي')
+            elif user_id not in muted_users:
+                muted_users.append(user_id)
+                await event.reply('تم الكتم ')
+            else:
+                await event.reply('اي كاتمة من قبل')
+        elif event.message.text.lower() == '.الغاء الكتم':
+            if user_id in muted_users:
+                muted_users.remove(user_id)
+                await event.reply('تم الغاء الكتم')
+            else:
+                await event.reply('هذا مامكتوم اكتمة ؟')
 
 @client.on(events.NewMessage)
 async def delete_message(event):
     sender_id = await client.get_peer_id(event.sender_id) 
+
     if sender_id in muted_users:
         await event.delete()
         
