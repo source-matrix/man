@@ -41,8 +41,7 @@ async def hi(event):
     # يابقية الله
     await event.client.send_file(messagelocation, video_path, caption=video_caption)
 
-
-        @events.register(events.NewMessage(outgoing=True, pattern=".اوامر الخاص"))
+@events.register(events.NewMessage(outgoing=True, pattern=".اوامر الخاص"))
 async def kas(event):
         await event.delete()
         messagelocation = event.to_id
