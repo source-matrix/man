@@ -60,9 +60,9 @@ async def kas(event):
 **""")
 @events.register(events.NewMessage(outgoing=True, pattern=".اوامر الادمن"))
 async def mjm(event):
-        await event.delete()
-        messagelocation = event.to_id
-        await event.client.send_message(messagelocation, ("""**
+    await event.delete()
+    messagelocation = event.to_id
+    await event.client.send_message(messagelocation, ("""**
 
 يجب ان تكون لديك صلاحية كافية للقيام بذلك 
 
@@ -70,4 +70,3 @@ async def mjm(event):
 .الغاء -التقييد -الكتم -الحظر 
 بالرد على المستخدم 
        **""")
-      
