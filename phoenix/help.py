@@ -60,4 +60,33 @@ async def hi(event):
     await event.client.send_file(messagelocation, video_path, caption=video_caption)
 
 
-        
+        @events.register(events.NewMessage(outgoing=True, pattern=".اوامر الخاص"))
+async def kas(event):
+        await event.delete()
+        messagelocation = event.to_id
+        await event.client.send_message(messagelocation, ("""**
+
+1 - `.تشغيل الرد` لتشغيل رد تلقائي تضعة انت سيظهر لكل من يقوم بمراسلتك
+2 - `.كليشة الرد` لتعين كليشة الرد التلقائي [يستخدم بالرد على الرسالة]
+3 - `.المخصص تشغيل` لتشغيل الردود المخصصة
+4 - ` .رد ` الامر مع الرد الذي تود تخصيصة [يستعمل بالرد على اي رسالة ]
+5 - ` .حذف رد` لحذف الردود التي قمت بتخصيصها سابقا
+6 - ` .تعطيل الرد` لتعطيل كلاً من الردود المخصصة والرد التلقائي
+7 - ` .اضف مجموعة التخزين ` بالرد على ايدي المجموعة -100
+8 - ` .اضف اشتراك`/`.تعطيل الاشتراك` الامر مع معرف القناة @I0I0II  يجب ان يشترك ليتحدث معك
+9 - ` .كتم ` سيقوم بكتم المستخدم داخل الخاص (بالرد على اي شخص)
+
+**""")
+@events.register(events.NewMessage(outgoing=True, pattern=".اوامر الادمن"))
+async def mjm(event):
+        await event.delete()
+        messagelocation = event.to_id
+        await event.client.send_message(messagelocation, ("""**
+
+يجب ان تكون لديك صلاحية كافية للقيام بذلك 
+
+تقييد - طرد - حظر -كتم
+.الغاء -التقييد -الكتم -الحظر 
+بالرد على المستخدم 
+       **""")
+      
