@@ -107,3 +107,53 @@ async def reply_handler(event):
                         await event.reply(reply_to_message)
                     else:
                         await event.reply(custom_reply)
+
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.سماح'))
+async def allow_chat(event):
+    if event.is_private:
+        allowed_chats.add(event.chat_id)
+        await event.edit("تم السماح لهذه المحادثة.")
+    else:
+        await event.edit("لا يمكن استخدام هذا الأمر إلا في المحادثات الخاصة.")
+    await asyncio.sleep(2)
+    await event.delete()
+
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.الغاء السماح'))
+async def disallow_chat(event):
+    if event.is_private:
+        allowed_chats.discard(event.chat_id)
+        await event.edit("تم إلغاء السماح لهذه المحادثة.")
+    else:
+        await event.edit("لا يمكن استخدام هذا الأمر إلا في المحادثات الخاصة.")
+    await asyncio.sleep(2)
+    await event.delete()
+
+
+
+last_reply_sent = None
+
+@events.register(events.NewMessage)
+async def reply_handler(event):
+    global afk_mode, custom_replies, custom_replies_enabled, last_reply_sent
+    if (afk_mode or custom_replies_enabled) and event.is_private and event.chat_id not in allowed_chats:
+        me = await event.client.get_me()
+        sender = await event.get_sender()
+        if sender.id != me.id and not sender.bot:
+            if custom_replies_enabled:
+                for trigger, reply in custom_replies.items():
+                    if trigger in event.raw_text:
+                        await event.reply(reply)
+                        break
+            if afk_mode:
+                if not event.raw_text in custom_replies:
+                    if reply_to_message:
+                        reply_text = reply_to_message.text
+                        reply = await event.reply(reply_to_message)
+                        if last_reply_sent and last_reply_sent.text == reply_text:
+                            await last_reply_sent.delete()
+                        last_reply_sent = reply
+                    else:
+                        reply = await event.reply(custom_reply)
+                        if last_reply_sent and last_reply_sent.text == custom_reply:
+                            await last_reply_sent.delete()
+                        last_reply_sent = reply
