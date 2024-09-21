@@ -8,7 +8,7 @@ custom_reply = "أنا لست موجودًا الآن، أرجوك اترك رس
 reply_to_message = None
 custom_replies = {}  
 custom_replies_enabled = False  
-
+allowed_chats = set()
 
 try:
     with open('custom_replies.pickle', 'rb') as f:
