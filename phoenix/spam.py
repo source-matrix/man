@@ -34,7 +34,7 @@ async def final_nshr(finalll, sleeptimet, chat, message, seconds):
             continue
 
         except Exception as e:
-            print(f"An unexpected error occurred: {e}")
+            print(f"An unexpected error occurred: {e}") 
 
 async def final_allnshr(finalll, sleeptimet, message):
     global final
