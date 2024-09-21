@@ -265,7 +265,7 @@ async def rotate_handler(event):
 
         current_group_index = (current_group_index + 1) % num_groups
         await asyncio.sleep(seconds)
-        @finalll.on(events.NewMessage(outgoing=True, pattern=r"^\.خاص$"))
+@finalll.on(events.NewMessage(outgoing=True, pattern=r"^\.خاص$"))
 async def private_handler(event):
     if not isinstance(event, events.NewMessage.Event):
         return
