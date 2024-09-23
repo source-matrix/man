@@ -56,21 +56,18 @@ async def tconv(event):
 @events.register(events.NewMessage(outgoing=True, pattern='\.سوال (.*)'))
 async def tco(event):
     chat = await event.get_chat()
-    question = event.pattern_match.group(1)  # استخراج السؤال من الأمر
+    question = event.pattern_match.group(1)  
     await event.edit("انتظر...")
 
-    # إزالة أمر /start
-    # await client.send_message('@SAMI_PAI_BOT', '/start') 
-
     async with client.conversation('@SAMI_PAI_BOT') as conv:
-        await conv.send_message(question)  # إرسال السؤال مباشرةً إلى البوت
+        await conv.send_message(question)  
 
-        # انتظار 3 ثواني قبل إعادة التوجيه للسماح للبوت بالكتابة
+        
         await asyncio.sleep(7)
 
-        xx = await conv.get_response()  # الحصول على رد البوت
+        xx = await conv.get_response()  
 
-        # إزالة الروابط من النص
+     
         text_without_links = re.sub(r'http\S+', '', xx.text)
 
         await client.send_read_acknowledge(conv.chat_id)
