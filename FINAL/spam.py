@@ -12,7 +12,7 @@ finalll = client.client
 
 final = False
 async def final_nshr(finalll, sleeptimet, chat, message, seconds):
-    global final
+    global final, delete_previous_message
     final = True
     last_sent_message = None
     while final:
@@ -22,7 +22,7 @@ async def final_nshr(finalll, sleeptimet, chat, message, seconds):
             else:
                 new_sent_message = await finalll.send_message(chat, message.text)
 
-            if last_sent_message:
+            if last_sent_message and delete_previous_message:
                 await last_sent_message.delete()
 
             last_sent_message = new_sent_message
@@ -37,7 +37,7 @@ async def final_nshr(finalll, sleeptimet, chat, message, seconds):
             print(f"An unexpected error occurred: {e}") 
 
 async def final_allnshr(finalll, sleeptimet, message):
-    global final
+    global final, delete_previous_message
     final = True
     last_sent_messages = {}
     while final:
@@ -51,7 +51,7 @@ async def final_allnshr(finalll, sleeptimet, message):
                         else:
                             new_sent_message = await finalll.send_message(chat.id, message.text)
 
-                        if chat.id in last_sent_messages:
+                        if chat.id in last_sent_messages and delete_previous_message:
                             await last_sent_messages[chat.id].delete()
 
                         last_sent_messages[chat.id] = new_sent_message
@@ -60,6 +60,33 @@ async def final_allnshr(finalll, sleeptimet, message):
             await asyncio.sleep(sleeptimet)
         except Exception as e:
             print(f"Error in final_allnshr: {e}")
+
+async def final_supernshr(finalll, sleeptimet, message):
+    global final, delete_previous_message
+    final = True
+    last_sent_messages = {}
+    while final:
+        try:
+            final_chats = await finalll.get_dialogs()
+            for chat in final_chats:
+                chat_title_lower = chat.title.lower()
+                if chat.is_group and any(keyword in chat_title_lower for keyword in super_groups):
+                    try:
+                        if message.media:
+                            new_sent_message = await finalll.send_file(chat.id, message.media, caption=message.text)
+                        else:
+                            new_sent_message = await finalll.send_message(chat.id, message.text)
+
+                        if chat.id in last_sent_messages and delete_previous_message:
+                            await last_sent_messages[chat.id].delete()
+
+                        last_sent_messages[chat.id] = new_sent_message
+                    except Exception as e:
+                        print(f"Error in sending message to chat {chat.id}: {e}")
+            await asyncio.sleep(sleeptimet)
+        except Exception as e:
+            print(f"Error in final_supernshr: {e}")
+
 
 super_groups = ["super", "سوبر"]
 async def final_supernshr(finalll, sleeptimet, message):
