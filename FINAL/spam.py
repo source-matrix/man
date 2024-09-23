@@ -9,10 +9,11 @@ from FINAL import client
 import re
 
 finalll = client.client
-delete_previous_message = False  
 final = False
+delete_previous_message = False
+
 async def final_nshr(finalll, sleeptimet, chat, message, seconds):
-    global final, delete_previous_message
+    global final
     final = True
     last_sent_message = None
     while final:
@@ -34,10 +35,10 @@ async def final_nshr(finalll, sleeptimet, chat, message, seconds):
             continue
 
         except Exception as e:
-            print(f"An unexpected error occurred: {e}") 
+            print(f"An unexpected error occurred: {e}")
 
 async def final_allnshr(finalll, sleeptimet, message):
-    global final, delete_previous_message
+    global final
     final = True
     last_sent_messages = {}
     while final:
@@ -61,8 +62,9 @@ async def final_allnshr(finalll, sleeptimet, message):
         except Exception as e:
             print(f"Error in final_allnshr: {e}")
 
+super_groups = ["super", "سوبر"]
 async def final_supernshr(finalll, sleeptimet, message):
-    global final, delete_previous_message
+    global final
     final = True
     last_sent_messages = {}
     while final:
@@ -88,32 +90,23 @@ async def final_supernshr(finalll, sleeptimet, message):
             print(f"Error in final_supernshr: {e}")
 
 
-super_groups = ["super", "سوبر"]
-async def final_supernshr(finalll, sleeptimet, message):
-    global final
-    final = True
-    last_sent_messages = {}
-    while final:
-        try:
-            final_chats = await finalll.get_dialogs()
-            for chat in final_chats:
-                chat_title_lower = chat.title.lower()
-                if chat.is_group and any(keyword in chat_title_lower for keyword in super_groups):
-                    try:
-                        if message.media:
-                            new_sent_message = await finalll.send_file(chat.id, message.media, caption=message.text)
-                        else:
-                            new_sent_message = await finalll.send_message(chat.id, message.text)
+@finalll.on(events.NewMessage(outgoing=True, pattern=r"^\.إيقاف حذف النشر$"))
+async def disable_delete_handler(event):
+    if not isinstance(event, events.NewMessage.Event): 
+        return
 
-                        if chat.id in last_sent_messages:
-                            await last_sent_messages[chat.id].delete()
+    global delete_previous_message
+    delete_previous_message = False
+    await event.reply("✅ تم إيقاف حذف النشر السابق.")
 
-                        last_sent_messages[chat.id] = new_sent_message
-                    except Exception as e:
-                        print(f"Error in sending message to chat {chat.id}: {e}")
-            await asyncio.sleep(sleeptimet)
-        except Exception as e:
-            print(f"Error in final_supernshr: {e}")
+@finalll.on(events.NewMessage(outgoing=True, pattern=r"^\.تفعيل حذف النشر$"))
+async def enable_delete_handler(event):
+    if not isinstance(event, events.NewMessage.Event):
+        return
+
+    global delete_previous_message
+    delete_previous_message = True
+    await event.reply("✅ تم تفعيل حذف النشر السابق.")
 
 @finalll.on(events.NewMessage(outgoing=True, pattern=r"^\.نشر (\d+) (@?\S+)$"))
 async def final_handler(event):
@@ -171,19 +164,6 @@ async def final_handler(event):
     global final
     final = True
     await final_supernshr(finalll, sleeptimet, message)
-
-
-@finalll.on(events.NewMessage(outgoing=True, pattern=r"^\.تفعيل حذف النشر$"))
-async def enable_delete(event):
-    global delete_previous_message
-    delete_previous_message = True
-    await event.edit("✅ تم تفعيل حذف النشر السابق")
-
-@finalll.on(events.NewMessage(outgoing=True, pattern=r"^\.إيقاف حذف النشر$"))
-async def disable_delete(event):
-    global delete_previous_message
-    delete_previous_message = False
-    await event.edit("✅ تم إيقاف حذف النشر السابق")
 
 
 
