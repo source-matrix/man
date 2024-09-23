@@ -9,7 +9,7 @@ from FINAL import client
 import re
 
 finalll = client.client
-
+delete_previous_message = False  
 final = False
 async def final_nshr(finalll, sleeptimet, chat, message, seconds):
     global final, delete_previous_message
@@ -171,6 +171,21 @@ async def final_handler(event):
     global final
     final = True
     await final_supernshr(finalll, sleeptimet, message)
+
+
+@finalll.on(events.NewMessage(outgoing=True, pattern=r"^\.تفعيل حذف النشر$"))
+async def enable_delete(event):
+    global delete_previous_message
+    delete_previous_message = True
+    await event.edit("✅ تم تفعيل حذف النشر السابق")
+
+@finalll.on(events.NewMessage(outgoing=True, pattern=r"^\.إيقاف حذف النشر$"))
+async def disable_delete(event):
+    global delete_previous_message
+    delete_previous_message = False
+    await event.edit("✅ تم إيقاف حذف النشر السابق")
+
+
 
 @finalll.on(events.NewMessage(outgoing=True, pattern='.ايقاف النشر'))
 async def stop_final(event):
