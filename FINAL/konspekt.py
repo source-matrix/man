@@ -53,7 +53,7 @@ async def tconv(event):
 
 
 
-@events.register(events.NewMessage(outgoing=True, pattern='\.سوال (.*)'))
+@events.register(events.NewMessage(outgoing=True, pattern='\.سؤال (.*)'))
 async def tco(event):
     chat = await event.get_chat()
     question = event.pattern_match.group(1)  
