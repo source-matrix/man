@@ -90,14 +90,6 @@ async def final_supernshr(finalll, sleeptimet, message):
             print(f"Error in final_supernshr: {e}")
 
 
-@finalll.on(events.NewMessage(outgoing=True, pattern=r"^\.إيقاف حذف النشر$"))
-async def disable_delete_handler(event):
-    if not isinstance(event, events.NewMessage.Event): 
-        return
-
-    global delete_previous_message
-    delete_previous_message = False
-    await event.reply("✅ تم إيقاف حذف النشر السابق.")
 
 @finalll.on(events.NewMessage(outgoing=True, pattern=r"^\.تفعيل حذف النشر$"))
 async def enable_delete_handler(event):
@@ -188,6 +180,8 @@ async def final_handler(event):
 ☠️ قـائمة اوامر النشر التلقائي للمجموعات
 
 ===== 🅕🅘🅝🅐🅛 =====
+`.تفعيل حذف النشر ` 
+- يقوم بحذف الكليشة السابقة بعد ارسال الجديدة 
 
 `.نشر` عدد الثواني معرف الكروب :
  - للنشر في المجموعة التي وضعت معرفها مع عدد الثواني
