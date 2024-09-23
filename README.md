@@ -23,8 +23,6 @@
 
 - python setup.py
 
-- pip install aiohttp
-
-9- python main.py
-
-Dev =  @I0I0II 
+- python main.py
+____________________
+- Dev =  @I0I0II 
