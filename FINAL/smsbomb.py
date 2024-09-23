@@ -5,7 +5,7 @@ from os import remove
 
 client = FINAL.client.client
 
-@events.register(events.NewMessage(outgoing=True, pattern=r'\.صوت'))
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.انطق'))
 async def runj(event):
     await event.delete()
     language = event.message.raw_text.split()
