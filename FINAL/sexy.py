@@ -22,7 +22,7 @@ async def sexy(event):
             "😎 \n/\\_,__😫 \n  //    //       \\",
             "😖 \n/\\_,💦_😋  \n  //         //        \\",
             "  😭      ☺️ \n  /|\   /(👶)\ \n  /!\   / \ ",
-            "Tugadi 😂..."
+            "النهاية 😂..."
         ]
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
