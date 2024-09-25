@@ -7,9 +7,9 @@ async def sexy(event):
         return
     animation_interval = 2
     animation_ttl = range(0, 15)
-    await event.edit(" sexy animation")
+    await event.edit(" edit final")
     animation_chars = [
-            "one ❤ story️ ",
+            "قصة قصيرة😜 ",
             "  😐             😕 \n/👕\         <👗\ \n 👖               /|",    
             "  😉          😳 \n/👕\       /👗\ \n  👖            /|",
             "  😚            😒 \n/👕\         <👗> \n  👖             /|",
