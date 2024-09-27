@@ -338,7 +338,7 @@ _/)______./¯"""/') ___/)___/)__,-----------’)_• ___/)_/)__./¯/)/)
 ░░░░░░░░░░░░░░░░░▄░░░░░░░░░░░░░░░░░░
 '''
 ]
-@events.register(events.NewMessage(pattern=".رسومات حب"))
+@events.register(events.NewMessage(pattern=".احبك2"))
 async def iloveu(event):
   anim = random.choice(love)
   return await event.edit(anim)
