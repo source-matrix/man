@@ -161,7 +161,7 @@ async def font(event):
     messagelocation = event.to_id
     await event.client.send_message(messagelocation, ("""**
 
- إليك قائمة اوامر الميمز:
+ إليك قائمة الخطوط :
 
 1- `.خط غامق`
 
@@ -172,8 +172,6 @@ async def font(event):
 4- `.خط بايثون`
 
 5- `.خط مشطوب`
-
-6- `خط مائل`
 
 * ملاحظة جميع الاوامر اعلاه تتعطل بكتابة نفس الامر 
 مثال : خط غامق /تم التفعيل
