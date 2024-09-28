@@ -191,7 +191,8 @@ async def mssx(event):
 async def yaali(event):
     await event.delete()
     messagelocation = event.to_id
-    await event.client.send_message(messagelocation, ("""**
+    await event.client.send_message(messagelocation, ("""
+    ```
 
 ⣿⣿⣿⣿⣿⢿⠛⢛⠿⠉⠉⠉⡉⢙⣻⠻⠻⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⠟⢁⡠⠀⠄⠀⠀⠀⠉⠙⠒⠃⠾⠹⣲⡘⠿⣿⣿⣿
@@ -223,6 +224,6 @@ async def yaali(event):
 ⠀⠸⣼⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
 
-       **"""))
+  ``` """))
 
 
