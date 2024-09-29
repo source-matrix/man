@@ -4,7 +4,7 @@ from telethon import events
 import FINAL.client
 client = FINAL.client.client
 
-@events.register(events.NewMessage(pattern=r".فراشة", outgoing=True))
+@events.register(events.NewMessage(pattern=r"\.فراشة", outgoing=True))
 async def star(event):
     if event.fwd_from:
         return
@@ -15,7 +15,7 @@ async def star(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".صندوق"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.صندوق"))
 async def boxs(event):
     if event.fwd_from:
         return
@@ -26,7 +26,7 @@ async def boxs(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(pattern=f".مطر", outgoing=True))
+@events.register(events.NewMessage(pattern=f"\.مطر", outgoing=True))
 async def rain(event):
     if event.fwd_from:
         return
@@ -37,7 +37,7 @@ async def rain(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".همم"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.همم"))
 async def clol(event):
     if event.fwd_from:
         return
@@ -48,7 +48,7 @@ async def clol(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".ركض"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.ركض"))
 async def odra(event):
     if event.fwd_from:
         return
@@ -60,7 +60,7 @@ async def odra(event):
 
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".فلايفمي"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.فلايفمي"))
 async def fleaveme(event):
     animation_interval = 1
     animation_ttl = range(0, 10)
@@ -85,7 +85,7 @@ async def fleaveme(event):
         await event.edit(animation_chars[i % 10])
 
 
-@events.register(events.NewMessage(pattern=".احبك", outgoing=True))
+@events.register(events.NewMessage(pattern="\.احبك", outgoing=True))
 async def loveu(event):
     if event.fwd_from:
         return
@@ -134,7 +134,7 @@ async def loveu(event):
         await event.edit(animation_chars[i % 35])
 
 
-@events.register(events.NewMessage(pattern=".طائرة", outgoing=True))
+@events.register(events.NewMessage(pattern="\.طائرة", outgoing=True))
 async def plane(event):
     if event.fwd_from:
         return
@@ -156,7 +156,7 @@ async def plane(event):
     await event.delete()
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".شرطة"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.شرطة"))
 async def police(event):
     if event.fwd_from:
         return
@@ -181,7 +181,7 @@ async def police(event):
         await event.edit(animation_chars[i % 12])
 
 
-@events.register(events.NewMessage(pattern=".جيو", outgoing=True))
+@events.register(events.NewMessage(pattern="\.جيو", outgoing=True))
 async def jio(event):
     if event.fwd_from:
         return
@@ -214,7 +214,7 @@ async def jio(event):
         await event.edit(animation_chars[i % 19])
 
 
-@events.register(events.NewMessage(pattern=f".النظام الشمسي", outgoing=True))
+@events.register(events.NewMessage(pattern=f"\.النظام الشمسي", outgoing=True))
 async def solarsystem(event):
     if event.fwd_from:
         return
@@ -234,4 +234,3 @@ async def solarsystem(event):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await event.edit(animation_chars[i % 8])
-
