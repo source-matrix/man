@@ -118,7 +118,7 @@ async def mjm(event):
        **"""))
 
 
-@events.register(events.NewMessage(outgoing=True, pattern="م7"))
+@events.register(events.NewMessage(outgoing=True, pattern=".م7"))
 async def memz(event):
     await event.delete()
     messagelocation = event.to_id
