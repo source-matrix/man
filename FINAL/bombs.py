@@ -3,7 +3,7 @@ from telethon import events
 import FINAL.client
 client = FINAL.client.client
 
-@events.register(events.NewMessage(pattern=f".قنبلة", outgoing=True))
+@events.register(events.NewMessage(pattern=f"\.قنبلة", outgoing=True))
 async def bombs(event):
     if event.fwd_from:
         return
