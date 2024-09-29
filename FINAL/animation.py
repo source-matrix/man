@@ -5,7 +5,7 @@ import FINAL.client
 client = FINAL.client.client
 
 
-@events.register(events.NewMessage(pattern=r".lul$"))
+@events.register(events.NewMessage(pattern=r"\.lul$"))
 async def lul(event):
     if event.fwd_from:
         return
@@ -15,7 +15,7 @@ async def lul(event):
         await event.edit("".join(deq))
         deq.rotate(1)
 
-@events.register(events.NewMessage(pattern=".snake"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.snake"))
 async def snake(event):
     if event.fwd_from:
         return
@@ -55,7 +55,7 @@ async def snake(event):
         await asyncio.sleep(animation_interval)
         await event.edit(animation_chars[i % 27])
 
-@events.register(events.NewMessage(pattern=r".nothappy$"))
+@events.register(events.NewMessage(pattern=r"\.nothappy$"))
 async def nothappy(event):
     if event.fwd_from:
         return
@@ -66,7 +66,7 @@ async def nothappy(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".clock$"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.clock$"))
 async def clock(event):
     if event.fwd_from:
         return
@@ -77,7 +77,7 @@ async def clock(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(pattern=r".muah$"))
+@events.register(events.NewMessage(pattern=r"\.muah$"))
 async def muah(event):
     if event.fwd_from:
         return
@@ -88,7 +88,7 @@ async def muah(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(pattern=".heart$"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.heart$"))
 async def heart(event):
     if event.fwd_from:
         return
@@ -99,7 +99,7 @@ async def heart(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(pattern=".gym$", outgoing=True))
+@events.register(events.NewMessage(pattern="\.gym$", outgoing=True))
 async def gym(event):
     if event.fwd_from:
         return
@@ -110,7 +110,7 @@ async def gym(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(pattern=f".earth$", outgoing=True))
+@events.register(events.NewMessage(pattern=f"\.earth$", outgoing=True))
 async def earth(event):
     if event.fwd_from:
         return
@@ -121,7 +121,7 @@ async def earth(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".moon$"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.moon$"))
 async def moon(event):
     if event.fwd_from:
         return
@@ -132,7 +132,7 @@ async def moon(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(pattern=r".candy$"))
+@events.register(events.NewMessage(pattern=r"\.candy$"))
 async def candy(event):
     if event.fwd_from:
         return
@@ -143,7 +143,7 @@ async def candy(event):
         deq.rotate(1)
 
 
-@events.register(events.NewMessage(pattern=f".smoon$", outgoing=True))
+@events.register(events.NewMessage(pattern=f"\.smoon$", outgoing=True))
 async def smoon(event):
     if event.fwd_from:
         return
@@ -163,7 +163,7 @@ async def smoon(event):
         await asyncio.sleep(animation_interval)
         await event.edit(animation_chars[i % 8])
 
-@events.register(events.NewMessage(pattern=f".tmoon$", outgoing=True))
+@events.register(events.NewMessage(pattern=f"\.tmoon$", outgoing=True))
 async def tmoon(event):
     if event.fwd_from:
         return
@@ -209,7 +209,7 @@ async def tmoon(event):
         await event.edit(animation_chars[i % 32])
 
 
-@events.register(events.NewMessage(pattern=f".hearts$", outgoing=True))
+@events.register(events.NewMessage(pattern=f"\.hearts$", outgoing=True))
 async def hearts(event):
     if event.fwd_from:
         return
@@ -236,7 +236,7 @@ async def hearts(event):
         await event.edit(animation_chars[i % 14])
 
 
-@events.register(events.NewMessage(pattern=f".clown$", outgoing=True))
+@events.register(events.NewMessage(pattern=f"\.clown$", outgoing=True))
 async def clown(event):
     if event.fwd_from:
         return
