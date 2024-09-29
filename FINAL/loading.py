@@ -4,7 +4,7 @@ import asyncio
 import random
 import FINAL.client
 client = FINAL.client.client
-@events.register(events.NewMessage(pattern='.تحميل', outgoing=True))
+@events.register(events.NewMessage(pattern='\.تحميل', outgoing=True))
 async def loading(event: events.NewMessage.Event):
     try:
         percentage = 0
