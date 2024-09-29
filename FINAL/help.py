@@ -228,8 +228,7 @@ async def yaali(event):
               ```"""
     elif event.pattern_match.group(1) == ".الاوامر":
         message = """**
-        .       ⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆
-                ⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆
+               ⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆
         `.م1 ` ➪ اوامــر اليوتـيوب
         `.م2 ` ➪ اوامــر الذكـاء الاصـطنـاعي
         `.م3 ` ➪ اوامــر الـوقتــي
@@ -246,7 +245,7 @@ async def yaali(event):
         `.م14` ➪ اوامــر الـخطـوط
         `.م15` ➪ اوامــر الـنطق
         ⋆┄─┄─┄─┄FINAL┄─┄─┄─┄┄⋆
-        .       FꙆ R E E U S E R B O T
+           FꙆ R E E U S E R B O T
         **"""
 
     await event.client.send_message(messagelocation, message)
