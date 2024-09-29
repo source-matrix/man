@@ -262,67 +262,67 @@ P = ("███████▄▄███████████▄\n"
 "░░░░░░░░░░░░▀▀\n\n")
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".وحش"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.وحش"))
 async def animmonster(monster):
     await monster.edit(A)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".خنزير"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.خنزير"))
 async def animpig(pig):
     await pig.edit(B)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".قاتل"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.قاتل"))
 async def animkiller(killer):
     await killer.edit(C)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".سلاح"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.سلاح"))
 async def animgun(gun):
     await gun.edit(D)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".كلب"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.كلب"))
 async def animdog(dog):
     await dog.edit(E)    
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".هلو"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.هلو"))
 async def animhello(hello):
     await hello.edit(F)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".همف"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.همف"))
 async def animhmf(hmf):
     await hmf.edit(G)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".زوج"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.زوج"))
 async def couple(e):
     await e.edit(H)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".رشفة"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.رشفة"))
 async def superme(e):
     await e.edit(I)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".مرحبا"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.مرحبا"))
 async def welcome(e):
     await e.edit(K)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".ثعبان"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.ثعبان"))
 async def snake(e):
     await e.edit(L) 
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".قطة"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.قطة"))
 async def cat(e):
     await e.edit(M)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".وداعا"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.وداعا"))
 async def bye(e):
     await e.edit(N)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".شيتوز"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.شيتوز"))
 async def shitos(e):
     await e.edit(O)
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".دسلايك"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.دسلايك"))
 async def dislike(e):
     await e.edit(P)
 
-@events.register(events.NewMessage(outgoing=True, pattern=f".هينفو"))
+@events.register(events.NewMessage(outgoing=True, pattern=f"\.هينفو"))
 async def snku(ult):
     ult = await ult.edit("`>>>`")
     animation_interval = 0.3
@@ -348,7 +348,7 @@ async def snku(ult):
     for i in animation_ttl:
         await asyncio.sleep(animation_interval)
         await ult.edit(animation_chars[i % 15])
-@events.register(events.NewMessage(pattern=f".squ$"))
+@events.register(events.NewMessage(pattern=f"\.squ$"))
 async def squ(ult):
     ult = await ult.edit("╔═══════════════════╗ \n  \n╚═══════════════════╝")
     await asyncio.sleep(0.5)
@@ -386,7 +386,7 @@ async def squ(ult):
     await asyncio.sleep(6)
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".مقاتل( (.*)|$)"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.مقاتل( (.*)|$)"))
 async def kiler(ult):
     name = ult.pattern_match.group(1)
     if not name:
@@ -411,7 +411,7 @@ async def kiler(ult):
         await asyncio.sleep(animation_interval)
         await ult.edit(animation_chars[i % 9])
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".قطار"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.قطار"))
 async def train(ult):
     animation_interval = 0.2
     animation_ttl = range(0, 30)
@@ -453,7 +453,7 @@ async def train(ult):
         await ult.edit(animation_chars[i % 30])
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=f".فضائي"))
+@events.register(events.NewMessage(outgoing=True, pattern=f"\.فضائي"))
 async def alien(ult):
     animation_interval = 1
     animation_ttl = range(0, 24)
@@ -492,7 +492,7 @@ async def alien(ult):
 
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".قلب( (.*)|$)"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.قلب( (.*)|$)"))
 async def hert(ult):
     ult = await ult.edit("...")
     animation_interval = 0.5
@@ -503,7 +503,7 @@ async def hert(ult):
         await ult.edit(animation_chars[i % 4])
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".raped( (.*)|$)"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.raped( (.*)|$)"))
 async def raped(ult):
     ult = await ult.edit("...")
     animation_interval = 1
@@ -524,7 +524,7 @@ async def raped(ult):
         await ult.edit(animation_chars[i % 11])
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".اني رايح( (.*)|$)"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.اني رايح( (.*)|$)"))
 async def fnl(ult):
     ult = await ult.edit("...")
     animation_interval = 2
@@ -535,7 +535,7 @@ async def fnl(ult):
         await ult.edit(animation_chars[i % 6])
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".قرد( (.*)|$)"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.قرد( (.*)|$)"))
 async def monkey(ult):
     ult = await ult.edit("...")
     animation_interval = 2
@@ -545,7 +545,7 @@ async def monkey(ult):
         await asyncio.sleep(animation_interval)
         await ult.edit(animation_chars[i % 6])
 
-@events.register(events.NewMessage(outgoing=True, pattern=".hands( (.*)|$)"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.hands( (.*)|$)"))
 async def hands(ult):
     ult = await ult.edit("...")
     animation_interval = 1
@@ -569,7 +569,7 @@ async def hands(ult):
         await ult.edit(animation_chars[i % 14])
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".count( (.*)|$)"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.count( (.*)|$)"))
 async def count(ult):
     ult = await ult.edit("...")
     animation_interval = 1
@@ -592,7 +592,7 @@ async def count(ult):
         await asyncio.sleep(animation_interval)
         await ult.edit(animation_chars[i % 13])
 
-@events.register(events.NewMessage(outgoing=True, pattern=".kf"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.kf"))
 async def bigf(event):
     anim = [
 """
@@ -639,7 +639,7 @@ async def bigf(event):
     an = random.choice(anim)
     return await event.edit(an)
 
-@events.register(events.NewMessage(outgoing=True, pattern=".f (.*)"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.f (.*)"))
 async def payf(e):
     paytext = e.pattern_match.group(1)
     pay = "{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}\n{}".format(
@@ -656,7 +656,7 @@ async def payf(e):
     await e.edit(pay)
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".bigoof"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.bigoof"))
 async def bigof(event):
     await event.edit(".")
     time.sleep(0.3)
@@ -683,7 +683,7 @@ async def bigof(event):
         await event.edit(animation_chars[i % 7])
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".flower"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.flower"))
 async def flower(event):
     await event.edit(".")
     time.sleep(0.3)
@@ -695,7 +695,7 @@ async def flower(event):
         
         
         
-@events.register(events.NewMessage(outgoing=True, pattern=".vheart ?(.*)"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.vheart ?(.*)"))
 async def vheart(event):
     await event.edit(".")
     time.sleep(0.3)
@@ -707,7 +707,7 @@ async def vheart(event):
   
  
  
-@events.register(events.NewMessage(outgoing=True, pattern=".luvart"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.luvart"))
 async def luvart(event):
     await event.edit(".")
     time.sleep(0.3)
