@@ -411,7 +411,7 @@ async def kiler(ult):
         await asyncio.sleep(animation_interval)
         await ult.edit(animation_chars[i % 9])
 
-@events.register(events.NewMessage(outgoing=True, pattern=r".قطار$"))
+@events.register(events.NewMessage(outgoing=True, pattern=r".قطار"))
 async def train(ult):
     animation_interval = 0.2
     animation_ttl = range(0, 30)
@@ -453,7 +453,7 @@ async def train(ult):
         await ult.edit(animation_chars[i % 30])
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=f".فضائي$"))
+@events.register(events.NewMessage(outgoing=True, pattern=f".فضائي"))
 async def alien(ult):
     animation_interval = 1
     animation_ttl = range(0, 24)
