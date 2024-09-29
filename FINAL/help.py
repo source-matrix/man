@@ -194,7 +194,8 @@ async def yaali(event):
     messagelocation = event.to_id
 
     if event.pattern_match.group(1) == ".ياعلي":
-        message = """```
+        message = """
+        ```
         ⣿⣿⣿⣿⣿⢿⠛⢛⠿⠉⠉⠉⡉⢙⣻⠻⠻⣿⣿⣿⣿⣿⣿
         ⣿⣿⣿⠟⢁⡠⠀⠄⠀⠀⠀⠉⠙⠒⠃⠾⠹⣲⡘⠿⣿⣿⣿
         ⣿⡿⠁⠀⠀⠀⠈⠛⠚⠉⠉⠛⠉⠙⠳⠖⣤⢌⡑⠂⠞⢿⣿
@@ -225,7 +226,8 @@ async def yaali(event):
         ⠀⠸⣼⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 
 
-              ```"""
+              ```
+              """
     elif event.pattern_match.group(1) == ".الاوامر":
         message = """**
                ⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆
