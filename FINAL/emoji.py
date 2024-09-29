@@ -4,7 +4,7 @@ from FINAL import emojify
 client = FINAL.client.client
 
 
-@events.register(events.NewMessage(pattern=".ايموجي"))
+@events.register(events.NewMessage(outgoing=True, pattern=".ايموجي"))
 async def itachi(event):
     args = event.pattern_match.group(1)
     if not args:
