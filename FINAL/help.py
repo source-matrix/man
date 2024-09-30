@@ -64,7 +64,7 @@ async def help(event):
 
 
 @events.register(events.NewMessage(outgoing=True, pattern=".م6"))
-async def mssx(event):
+async def hi(event):
     await event.delete()
     messagelocation = event.to_id
     await event.client.send_message(messagelocation, ("""**
