@@ -63,25 +63,13 @@ async def help(event):
 
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".فحص"))
-async def hi(event):
+@events.register(events.NewMessage(outgoing=True, pattern=".م6"))
+async def mssx(event):
     await event.delete()
-
-    chat = await event.get_chat()
-
-    animation_path = "https://t.me/N1NN_N/8"
-    animation_caption = "كل شيء يعمل جيدا ياصديقي اكتب `.الاوامر`"
-
-    animation_message = await event.client.send_file(chat, animation_path) 
-
-    words = animation_caption.split()
-
-    for i in range(len(words)):
-        caption_text = " ".join(words[:i+1])
-
-        await event.client.edit_message(animation_message, caption_text) 
-
-        await asyncio.sleep(0.4) 
+    messagelocation = event.to_id
+    await event.client.send_message(messagelocation, ("""**
+كلشي شغال لاتصيح اكتب `.الاوامر` وخلصني 
+   **"""))
 
 
 @events.register(events.NewMessage(outgoing=True, pattern=".م5"))
@@ -123,6 +111,14 @@ async def mjm(event):
 .الغاء -التقييد -الكتم -الحظر 
 بالرد على المستخدم 
 
+`.تاك_للكل` او `.all` :
+- يقوم هذا الامر بعمل تاك او منشن جماعي [يمكنك وضع رسالة مع الامر]
+
+`.كشف المحذوفين`:
+- يقوم هذا الامر بعرض عدد المحذوفين في مجموعتك
+
+`.اطرد المحذوفين`:
+-يقوم هذا الامر بطرد المحذوفين من مجموعتك
 
 #سيتم اضافة بعض الاشياء هنا قريبا .....
        **"""))
