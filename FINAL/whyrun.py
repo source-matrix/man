@@ -1,9 +1,11 @@
+import logging
+logging.getLogger('telethon').setLevel(logging.CRITICAL)
 from telethon import events
 import FINAL.client
 import random
-
+import requests
+from telethon.errors.rpcerrorlist import WebpageMediaEmptyError
 client = FINAL.client.client
-
 
 questions_list = [
     "أسئلة✨",
@@ -109,7 +111,75 @@ questions_list = [
 ]
 
 
-@events.register(events.NewMessage(outgoing=True, pattern="\.كت"))
-async def why(event):    
-    anim = random.choice(questions_list)
-    return await event.edit(anim)
+image_links = [
+    "https://t.me/CNN9N/10",
+    "https://t.me/CNN9N/11",
+    "https://t.me/CNN9N/12",
+    "https://t.me/CNN9N/13",
+    "https://t.me/CNN9N/14",
+    "https://t.me/CNN9N/15",
+    "https://t.me/CNN9N/16",
+    "https://t.me/CNN9N/17",
+    "https://t.me/CNN9N/18",
+    "https://t.me/CNN9N/19",
+    "https://t.me/CNN9N/20",
+    "https://t.me/CNN9N/21",
+    "https://t.me/CNN9N/22",
+    "https://t.me/CNN9N/23",
+    "https://t.me/CNN9N/24",
+    "https://t.me/CNN9N/25",
+    "https://t.me/CNN9N/26",
+    "https://t.me/CNN9N/27",
+    "https://t.me/CNN9N/28",
+    "https://t.me/CNN9N/29",
+    "https://t.me/CNN9N/30",
+    "https://t.me/CNN9N/31",
+    "https://t.me/CNN9N/32",
+    "https://t.me/CNN9N/33",
+    "https://t.me/CNN9N/34",
+    "https://t.me/CNN9N/35",
+    "https://t.me/CNN9N/36",
+    "https://t.me/CNN9N/37",
+    "https://t.me/CNN9N/38",
+    "https://t.me/CNN9N/39",
+    "https://t.me/CNN9N/40",
+    "https://t.me/CNN9N/41",
+    "https://t.me/CNN9N/42",
+    "https://t.me/CNN9N/43",
+    "https://t.me/CNN9N/44",
+    "https://t.me/CNN9N/45",
+    "https://t.me/CNN9N/46",
+    "https://t.me/CNN9N/47"
+]
+
+
+
+
+
+
+
+
+
+
+
+
+@events.register(events.NewMessage(outgoing=True, pattern="\.كت|\.انمي"))
+async def why(event):
+    await event.delete()
+    chat = await event.get_chat()
+
+    if event.pattern_match.group(0) == ".كت":
+        message = random.choice(questions_list)
+        await event.client.send_message(chat, message)
+
+    elif event.pattern_match.group(0) == ".انمي":
+        while True:
+            try:
+                random_image_link = random.choice(image_links)
+                channel_name, message_id = random_image_link.split('/')[-2:]
+                message = await client.get_messages(channel_name, ids=int(message_id))
+                await client.send_message(chat, "اتمنى ان تنال اعجابك :", file=message, silent=True)
+                break
+            except WebpageMediaEmptyError:
+                pass
+
