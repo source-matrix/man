@@ -67,7 +67,7 @@ async def setclock(event):
 from telethon import events
 from time import sleep
 
-@events.register(events.NewMessage(outgoing=True, pattern=r'\.المحذوفين'))
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.كشف المحذوفين'))
 async def runsda(event):
     await event.edit("البحث عن...")
     sleep(1)
