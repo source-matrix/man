@@ -63,7 +63,7 @@ async def help(event):
 
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".م6"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.فحص"))
 async def hi(event):
     await event.delete()
     messagelocation = event.to_id
@@ -72,7 +72,7 @@ async def hi(event):
    **"""))
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".م5"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.م5"))
 async def kas(event):
         await event.delete()
         messagelocation = event.to_id
@@ -99,7 +99,7 @@ async def kas(event):
 10 - `.ابلاغ` / `.الغاء الابلاغ` بالرد على  اي رساله وسيتم ارسالها للدعم مباشرة [.ابلاغ 5 مثلا بالرد على الرسالة]
 
 **"""))
-@events.register(events.NewMessage(outgoing=True, pattern=".م4"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.م4"))
 async def mjm(event):
     await event.delete()
     messagelocation = event.to_id
@@ -124,7 +124,7 @@ async def mjm(event):
        **"""))
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".م7"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.م7"))
 async def memz(event):
     await event.delete()
     messagelocation = event.to_id
@@ -146,7 +146,7 @@ async def memz(event):
        **"""))
 
 
-@events.register(events.NewMessage(outgoing=True, pattern=".م14"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.م14"))
 async def font(event):
     await event.delete()
     messagelocation = event.to_id
@@ -172,7 +172,7 @@ async def font(event):
 
        **"""))
        
-@events.register(events.NewMessage(outgoing=True, pattern=".م6"))
+@events.register(events.NewMessage(outgoing=True, pattern="\.م6"))
 async def mssx(event):
     await event.delete()
     messagelocation = event.to_id
@@ -237,7 +237,7 @@ async def yaali(event):
     elif event.pattern_match.group(1) == ".الاوامر":
         message = """**
                ⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆
-        `.م1 ` ➪ اوامــر اليوتـيوب
+        `.م1 ` ➪ اوامــر اليوتـيوب والتـرفيـه
         `.م2 ` ➪ اوامــر الذكـاء الاصـطنـاعي
         `.م3 ` ➪ اوامــر الـوقتــي
         `.م4 ` ➪ اوامــر المجمــوعــه
