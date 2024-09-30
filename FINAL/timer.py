@@ -182,7 +182,7 @@ async def setbioclock(event):
     sleep(0.5)
     msg=event.message.raw_text.split()
     t=int(msg[1])
-    t*=60
+    t*=56
     while t>0:
         from datetime import datetime
         now = datetime.now()
@@ -197,6 +197,6 @@ async def setbioclock(event):
         await event.edit('تم وضع البايو الوقتي')
         sleep(0.5)
         await event.delete()
-        await asyncio.sleep(60)
+        await asyncio.sleep(56)
         t-=1
     await client(UpdateProfileRequest("Vaqt nisbiy tushuncha !!"))
