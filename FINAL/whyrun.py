@@ -214,16 +214,17 @@ image_links = [
 
 
 
-@events.register(events.NewMessage(outgoing=True, pattern="\.كت|\.انمي"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"(^\.كت|\s\.كت)\b|\.انمي"))
 async def why(event):
     await event.delete()
     chat = await event.get_chat()
 
-    if event.pattern_match.group(0) == ".كت":
+    matched_command = event.pattern_match.string
+    if matched_command == ".كت":
         message = random.choice(questions_list)
         await event.client.send_message(chat, message)
 
-    elif event.pattern_match.group(0) == ".انمي":
+    elif matched_command == ".انمي":
         while True:
             try:
                 random_image_link = random.choice(image_links)
@@ -233,4 +234,3 @@ async def why(event):
                 break
             except WebpageMediaEmptyError:
                 pass
-
