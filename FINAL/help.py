@@ -267,7 +267,7 @@ async def yaali(event):
         `.م14` ➪ اوامــر الـخطـوط
         `.م15` ➪ اوامــر الـنطق
         ⋆┄─┄─┄─┄FINAL┄─┄─┄─┄┄⋆
-           FꙆ R E E U S E R B O T
+           F R E E U S E R B O T
         **"""
 
     await event.client.send_message(messagelocation, message)
