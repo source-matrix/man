@@ -64,13 +64,39 @@ async def help(event):
 
 
 
-@events.register(events.NewMessage(outgoing=True, pattern="\.فحص"))
+from telethon import events
+import datetime
+import time
+
+start_time = datetime.datetime.now()
+
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.فحص(?:\s|$)([\s\S]*)"))
 async def hi(event):
-    await event.delete()
-    messagelocation = event.to_id
-    await event.client.send_message(messagelocation, ("""**
-كلشي شغال لاتصيح اكتب `.الاوامر` وخلصني 
-   **"""))
+    try:
+        user = await event.client.get_me()
+        name = user.first_name
+        mention = f"[{name}](tg://user?id={user.id})"
+        uptime = datetime.datetime.now() - start_time
+        hours, remainder = divmod(uptime.seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        uptime_str = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+        start = time.time()
+        await event.edit("** يتـم التـأكـد انتـظر قليلا رجاءا**")
+        end = time.time()
+        ping = (end - start) * 1000
+        message = f"""
+⋆┄─┄──┄┄⋆
+**⚡ NAME       ⇰ {mention}**
+**⚡ TIME UP   ⇰ {uptime_str}**
+**⚡ PING        ⇰ {ping:.2f}**
+**⋆┄─┄ FINAL USERBOT ┄┄⋆**
+
+"""
+        await event.edit(message)
+
+    except Exception as e:
+        print(f"حدث خطأ: {e}")
+        await event.edit(f"حدث خطأ: \n`{e}`")
 
 
 @events.register(events.NewMessage(outgoing=True, pattern="\.م5"))
