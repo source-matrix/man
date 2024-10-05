@@ -59,7 +59,7 @@ async def setclock(event):
             await event.delete()
             await asyncio.sleep(56)
             t-=1
-    await client(UpdateProfileRequest(last_name="الوقت تقريبي فقط !!"))
+    await client(UpdateProfileRequest(last_name="!!"))
 
 
 
@@ -151,6 +151,28 @@ async def auto_save_media(event):
 
 
 
+
+@events.register(events.NewMessage(outgoing=True, pattern=r'\.فلش'))
+async def runflash(event):
+    await event.edit("جاري التفليش...")
+    sleep(1)
+    await event.delete()
+    messagelocation = event.to_id
+    try:
+        chatname = event.chat.title
+        async for users in event.client.iter_participants(messagelocation):
+            if not users.is_self:
+                try:
+                    await event.client.kick_participant(messagelocation, users.id)
+                except:
+                    pass
+        await event.client.send_message(messagelocation, f"تم تفليش المجموعة {chatname}")
+    except Exception as e:
+        await event.client.send_message(messagelocation, f"حدث خطأ ما: {e}")
+
+
+
+
 @events.register(events.NewMessage(outgoing=True, pattern=r'\.حفظ'))
 async def runrts(event):
     await event.delete()
@@ -199,4 +221,4 @@ async def setbioclock(event):
         await event.delete()
         await asyncio.sleep(56)
         t-=1
-    await client(UpdateProfileRequest("Vaqt nisbiy tushuncha !!"))
+    await client(UpdateProfileRequest("!!"))
