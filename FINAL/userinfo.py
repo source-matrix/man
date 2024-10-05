@@ -1,7 +1,8 @@
 from telethon import events
 import FINAL.client
 from telethon.tl.functions.users import GetFullUserRequest
-from os import remove
+from telethon.tl.functions.photos import GetUserPhotosRequest
+from telethon.tl.types import InputPeerUser
 
 client = FINAL.client.client
 
@@ -14,8 +15,33 @@ async def userinfo(event):
         targetdetails = await client(GetFullUserRequest(targetid))
         messagelocation = event.to_id
         client.parse_mode = "html"
-        userimage = await client.download_profile_photo(f"@{targetdetails.users[0].username}")
-        await client.send_file(messagelocation, userimage, caption=f"👤 Firstname: {targetdetails.users[0].first_name}\n👤 Lastname: {targetdetails.users[0].last_name}\n🔗 Username: @{targetdetails.users[0].username}\n🆔 User ID: {targetdetails.users[0].id}\n☎️ Phone number: +{targetdetails.users[0].phone}\n📎 User Link: <a href='tg://user?id={targetid}'>Profile</a>\n📝 Bio: {targetdetails.full_user.about}\n🌐 Data Center ID: {targetdetails.users[0].photo.dc_id}\n🤖 Bot: {targetdetails.users[0].bot}\n👥 Common groups: {targetdetails.full_user.common_chats_count}\n🚫 Blocked: {targetdetails.full_user.blocked}\n\n")
-        remove(userimage)
-    except:
-        pass
+
+        user_entity = targetdetails.users[0]
+        user_photo = await client.download_profile_photo(InputPeerUser(user_entity.id, user_entity.access_hash))
+
+
+        photos = await client(GetUserPhotosRequest(user_id=targetid, offset=0, max_id=0, limit=100))
+        image_count = len(photos.photos)
+
+        message_text = f"""
+ٴ⋆─┄─┄─┄─ FINAL ─┄─┄─┄─⋆
+
+✦ الاسـم    ⇠  {targetdetails.users[0].first_name}
+✦ المعـرف  ⇠  @{targetdetails.users[0].username}
+✦ الايـدي   ⇠  {targetdetails.users[0].id}
+✦ الصـور    ⇠  {image_count}
+✦ التفاعل   ⇠  امبراطور التفاعل  🥇
+✦ الـمجموعات المشتـركة ⇠  {targetdetails.full_user.common_chats_count}
+✦ البايـو     ⇠  {targetdetails.full_user.about}
+
+ٴ⋆─┄─┄─┄─ FINAL ─┄─┄─┄─⋆
+"""
+
+        if user_photo:
+            await client.send_message(messagelocation, message_text, file=user_photo)
+        else:
+            await client.send_message(messagelocation, message_text)
+
+    except Exception as e:
+        print(f"Error in userinfo: {e}")
+        await event.respond(f"حدث خطأ: {e}")
