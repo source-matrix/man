@@ -35,7 +35,7 @@ async def numbers(event):
                 await client.send_message(event.message.to_id,str(t))
                 t-=1
 
-@events.register(events.NewMessage(outgoing=True, pattern="\.اسم"))
+@events.register(events.NewMessage(outgoing=True, pattern=r"\.اسم"))
 async def setclock(event):
     from telethon.tl.functions.account import UpdateProfileRequest
     await event.edit('يتم تعيين الاسم الوقتي . . .')
