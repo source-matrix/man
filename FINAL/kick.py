@@ -145,3 +145,5 @@ async def unrunkick(event):
 
     except Exception as e:
         await event.respond(f"حدث خطأ: {e}")
+
+    client.parse_mode = "markdown"  # إعادة تعيين parse_mode إلى Markdown
