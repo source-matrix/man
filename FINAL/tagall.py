@@ -12,7 +12,6 @@ async def tagall(event):
 
     client.parse_mode = "html"
     message_text = event.pattern_match.group(2).strip()
-    mentions = ""
     chat = await event.get_input_chat()
     me = await client.get_me()
     permissions = await client.get_permissions(chat, me)
@@ -22,30 +21,41 @@ async def tagall(event):
         return
 
     all_participants = await client.get_participants(chat)
-    total_members = len(all_participants)
     hidden_members_found = False
 
-    all_mentions = []
-    for user in all_participants:
-        if user.deleted:
-            continue
-        try:
-            participant = await client.get_entity(user.id)
-            if isinstance(participant, telethon.tl.types.ChannelParticipant) and participant.is_hidden:
-                hidden_members_found = True
-        except ValueError:
-            continue
-        all_mentions.append(f"<a href='tg://user?id={user.id}'>{user.first_name}</a>")
+    async def get_members():
+        for user in all_participants:
+            if not user.deleted:
+                try:
+                    participant = await client.get_entity(user.id)
+                    if not (isinstance(participant, telethon.tl.types.ChannelParticipant) and participant.is_hidden):
+                        yield user
+                except ValueError:
+                    pass
 
-    mentions_lists = [all_mentions[i:i+100] for i in range(0, total_members, 100)]
+    
+    temp_mentions = []  
+    async for user in get_members():
+        temp_mentions.append(f"<a href='tg://user?id={user.id}'>{user.first_name}</a>")
+        
+        if len(temp_mentions) == 20:  
+            final_mentions = ""
+            if message_text:
+                final_mentions += f"<b>{message_text}</b>\n"
+            final_mentions += " ".join(temp_mentions) + "\n\n"
+            if hidden_members_found:
+                final_mentions += "(لا يمكن ذكر الأعضاء المخفيين)\n"
+            await client.send_message(chat, final_mentions, parse_mode="html")
+            await asyncio.sleep(1)
+            
+            temp_mentions = []  
 
-    final_mentions = ""
-    for mentions_list in mentions_lists:
+  
+    if temp_mentions:  
+        final_mentions = ""
         if message_text:
             final_mentions += f"<b>{message_text}</b>\n"
-        final_mentions += " ".join(mentions_list) + "\n\n"  
-
-    if hidden_members_found:
-        final_mentions += "(لا يمكن ذكر الأعضاء المخفيين)\n"
-
-    await client.send_message(chat, final_mentions, parse_mode="html") 
+        final_mentions += " ".join(temp_mentions) + "\n\n"
+        if hidden_members_found:
+            final_mentions += "(لا يمكن ذكر الأعضاء المخفيين)\n"
+        await client.send_message(chat, final_mentions, parse_mode="html")
