@@ -7,7 +7,7 @@ import FINAL.client
 client = FINAL.client.client
 
 @events.register(events.NewMessage(pattern='\.تحميل|\.هاك', outgoing=True))
-async def handler(event: events.NewMessage.Event):
+async def loading(event: events.NewMessage.Event):
     try:
         if event.pattern_match.group(0) == ".تحميل":
             percentage = 0
