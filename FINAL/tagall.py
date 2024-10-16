@@ -59,3 +59,5 @@ async def tagall(event):
         if hidden_members_found:
             final_mentions += "(لا يمكن ذكر الأعضاء المخفيين)\n"
         await client.send_message(chat, final_mentions, parse_mode="html")
+        
+    client.parse_mode = "markdown"  
