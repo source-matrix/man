@@ -45,3 +45,5 @@ async def userinfo(event):
     except Exception as e:
         print(f"Error in userinfo: {e}")
         await event.respond(f"حدث خطأ: {e}")
+
+    client.parse_mode = "markdown"  
