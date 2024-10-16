@@ -7,9 +7,10 @@ client = FINAL.client.client
 
 @events.register(events.NewMessage(pattern='\.بنك'))
 async def ping(event):
-    client.parse_mode = "html"
+    client.parse_mode = "html" 
     start = datetime.now()
-    msg = await event.edit("Pong!")
+    msg = await event.edit("سرعة الانترنيت!")
     end = datetime.now()
     ms = (end - start).microseconds / 1000
-    await msg.edit(f"<b>Pong!!<b/>\n`{ms} ms`")
+    await msg.edit(f"<b>سرعة انترنيتك!!<b/>\n`{ms} ms`")
+    client.parse_mode = "markdown"  
