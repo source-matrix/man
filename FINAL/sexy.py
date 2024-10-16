@@ -2,7 +2,7 @@ from telethon import events
 import asyncio
 
 @events.register(events.NewMessage(pattern=".(احم|غبي)"))
-async def animation(event):
+async def sexy(event):
     if event.fwd_from:
         return
 
