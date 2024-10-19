@@ -26,8 +26,8 @@ async def loading(event: events.NewMessage.Event):
             if event.reply_to_msg_id:
                 reply_message = await event.get_reply_message()
                 idd = reply_message.sender_id
-                if idd == 705475246:
-                    await event.edit("**᯽︙ عـذرا لا استـطيع اخـتراق مـطوري اعـتذر او سيقـوم بتهـكيرك**")
+                if idd == 5434703779:
+                    await event.edit("طيططططططططططططططططططط")
                     return
                 await event.edit("يتـم الاختـراق ..")
                 sender = await event.get_sender()
