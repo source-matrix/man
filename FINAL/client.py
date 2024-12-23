@@ -1,8 +1,9 @@
-from telethon import TelegramClient, sync
+from telethon import TelegramClient, events, sync 
 from telethon.sessions import StringSession
 from telethon.errors import SessionPasswordNeededError
 import os
 import pickle
+import sys
 
 api_id = 29914850
 api_hash = "de7b0ee6f49fff7b4a5f0e5c015972ce"
