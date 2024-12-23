@@ -5,7 +5,7 @@ import os
 
 client = FINAL.client.client
 
-@events.register(events.NewMessage(outgoing=True, pattern=r'^\.م17$'))
+@events.register(events.NewMessage(outgoing=True, pattern=r'^\.9م177$'))
 async def alive(event):
     client = event.client
     me = await client.get_me()
